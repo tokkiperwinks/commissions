@@ -4,44 +4,43 @@
 
 <div id="modal" class="modal-backdrop">
   <div id="card" class="card">
-    <h1 class="text-3xl font-bold mb-4">Terms of Service</h1>
+    <h1 class="text-3xl font-bold mb-6">Terms of Service</h1>
 
-    <p>
-      <strong>Terms of Service (General)</strong><br />
-      I reserve the right to decline any commission for any reason I deem necessary.<br /><br />
+    <section class="mb-6">
+      <h2 class="text-xl font-semibold mb-2">General</h2>
+      <ul class="list-disc pl-5 space-y-2">
+        <li>I reserve the right to decline any commission for any reason I deem necessary.</li>
+        <li>Commissions are for personal use only. They may not be used for profit.</li>
+        <li>I retain full rights to all artwork I create. Uploading or using my work in AI engines is strictly prohibited.</li>
+        <li>Unless requested otherwise, I may post the final piece on social media, in my portfolio, or in my commission gallery.</li>
+        <li>Prices are base estimates. Complexity or extra details may raise the final cost.</li>
+        <li>Reposting is allowed with proper credit: <strong>@tokkiperiwinkle</strong>.</li>
+        <li>Please be patient. I have other commitments. Feel free to ask for updates.</li>
+        <li>Provide visual references like character sheets, poses, or doodles to avoid mistakes.</li>
+      </ul>
+    </section>
 
-      Commissions are for personal use only. You may use the artwork for profile pictures, banners, or similar purposes, but it may not be used for profit.<br /><br />
+    <section class="mb-6">
+      <h2 class="text-xl font-semibold mb-2">Payment</h2>
+      <ul class="list-disc pl-5 space-y-2">
+        <li>Payments are accepted through PayPal only. I will send an invoice.</li>
+        <li>A non-refundable deposit of at least 50% is required before I begin.</li>
+        <li>After the sketch is approved, the remaining balance must be paid in full.</li>
+        <li>If you cancel after paying the deposit but before sketch approval, a partial refund may be issued. I will retain at least 25%.</li>
+        <li>If I cancel the commission, I’ll refund based on work done but retain at least 25% for time spent.</li>
+        <li>Rude, aggressive, or inappropriate behavior will result in cancellation. I’ll refund 50% and keep 50% as compensation.</li>
+      </ul>
+    </section>
 
-      I retain full rights to all artwork I create. Uploading or using my work in any AI engine is strictly prohibited.<br /><br />
-
-      Unless requested otherwise, I may post the finished commission on my social media accounts. I may also include it in my portfolio or commission gallery.<br /><br />
-
-      Listed prices are base prices. The final cost may increase depending on complexity, detail, or additional elements in the commission.<br /><br />
-
-      Reposting is allowed, but please give proper credit: [@tokkiperiwinkle].<br /><br />
-
-      Please be patient. I may have other commitments such as school, other projects, or personal time. You’re always welcome to ask for updates! I typically send progress updates when I can or feel like it.<br /><br />
-
-      Please provide visual references (e.g. character sheets, pose ideas, even rough doodles) — anything that can help me better understand your request and avoid mistakes.<br /><br />
-
-      <strong>Terms of Service (Payment)</strong><br />
-      Payments are accepted through PayPal only. I will send an invoice.<br /><br />
-
-      A non-refundable deposit of at least 50% is required before I start working. After the sketch is approved, the remaining balance must be paid in full before I continue and finish the commission.<br /><br />
-
-      If you cancel after paying the deposit but before sketch approval, a partial refund may be issued. I will keep at least 25% of the total price.<br /><br />
-
-      If I am unable to complete the commission, I will issue a partial refund based on the work done. Again, at least 25% of the total cost will be retained to cover my time and effort.<br /><br />
-
-      Respectful communication is expected. Rude, aggressive, or inappropriate behavior will result in cancellation. In that case, I will refund 50% and keep the other 50% as compensation.<br /><br />
-
-      <strong>Terms of Service (Post-Payment)</strong><br />
-      Once I begin, I’ll send progress shots of the sketch (and flat colors if needed) for your approval or revisions. After the sketch is approved, refunds will no longer be available unless I decide to cancel the commission myself.<br /><br />
-
-      When the final piece is done, I’ll send a final preview. You can request up to three (3) minor revisions. Any further revisions beyond that will require an additional fee, which must be paid before I make the changes.<br /><br />
-
-      Once the artwork is approved, I will email you the high-resolution .PNG files and watermarked .JPGs suitable for posting.
-    </p>
+    <section class="mb-6">
+      <h2 class="text-xl font-semibold mb-2">Post-Payment</h2>
+      <ul class="list-disc pl-5 space-y-2">
+        <li>You’ll receive sketch progress and flat colors (if needed) for feedback or revisions.</li>
+        <li>After sketch approval, refunds are no longer available unless I cancel the commission.</li>
+        <li>Final preview will be sent. You can request up to 3 minor revisions. More will cost extra.</li>
+        <li>Approved files will be emailed as high-res PNGs and watermarked JPGs for posting.</li>
+      </ul>
+    </section>
 
     <button class="accept-button" id="acceptBtn">Accept</button>
   </div>
@@ -80,13 +79,13 @@
     background-color: white;
     border: 5px solid #2d2d2d;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-    font-family: sans-serif;
-    line-height: 1.7;
+    font-family: "Segoe UI", Roboto, sans-serif;
+    font-size: 1rem;
+    line-height: 1.6;
     overflow-y: auto;
-    white-space: pre-line;
+    white-space: normal;
     position: relative;
 
-    /* Firefox support */
     scrollbar-width: thin;
     scrollbar-color: #2d2d2d transparent;
   }
@@ -123,7 +122,6 @@
 
     acceptBtn.addEventListener("click", () => {
       modal.classList.add("fade-out");
-
       modal.addEventListener(
         "transitionend",
         () => {
