@@ -1,0 +1,136 @@
+---
+// No frontmatter needed
+---
+
+<div id="modal" class="modal-backdrop">
+  <div id="card" class="card">
+    <h1 class="text-3xl font-bold mb-4">Terms of Service</h1>
+
+    <p>
+      <strong>Terms of Service (General)</strong><br />
+      I reserve the right to decline any commission for any reason I deem necessary.<br /><br />
+
+      Commissions are for personal use only. You may use the artwork for profile pictures, banners, or similar purposes, but it may not be used for profit.<br /><br />
+
+      I retain full rights to all artwork I create. Uploading or using my work in any AI engine is strictly prohibited.<br /><br />
+
+      Unless requested otherwise, I may post the finished commission on my social media accounts. I may also include it in my portfolio or commission gallery.<br /><br />
+
+      Listed prices are base prices. The final cost may increase depending on complexity, detail, or additional elements in the commission.<br /><br />
+
+      Reposting is allowed, but please give proper credit: [@tokkiperiwinkle].<br /><br />
+
+      Please be patient. I may have other commitments such as school, other projects, or personal time. You’re always welcome to ask for updates! I typically send progress updates when I can or feel like it.<br /><br />
+
+      Please provide visual references (e.g. character sheets, pose ideas, even rough doodles) — anything that can help me better understand your request and avoid mistakes.<br /><br />
+
+      <strong>Terms of Service (Payment)</strong><br />
+      Payments are accepted through PayPal only. I will send an invoice.<br /><br />
+
+      A non-refundable deposit of at least 50% is required before I start working. After the sketch is approved, the remaining balance must be paid in full before I continue and finish the commission.<br /><br />
+
+      If you cancel after paying the deposit but before sketch approval, a partial refund may be issued. I will keep at least 25% of the total price.<br /><br />
+
+      If I am unable to complete the commission, I will issue a partial refund based on the work done. Again, at least 25% of the total cost will be retained to cover my time and effort.<br /><br />
+
+      Respectful communication is expected. Rude, aggressive, or inappropriate behavior will result in cancellation. In that case, I will refund 50% and keep the other 50% as compensation.<br /><br />
+
+      <strong>Terms of Service (Post-Payment)</strong><br />
+      Once I begin, I’ll send progress shots of the sketch (and flat colors if needed) for your approval or revisions. After the sketch is approved, refunds will no longer be available unless I decide to cancel the commission myself.<br /><br />
+
+      When the final piece is done, I’ll send a final preview. You can request up to three (3) minor revisions. Any further revisions beyond that will require an additional fee, which must be paid before I make the changes.<br /><br />
+
+      Once the artwork is approved, I will email you the high-resolution .PNG files and watermarked .JPGs suitable for posting.
+    </p>
+
+    <button class="accept-button" id="acceptBtn">Accept</button>
+  </div>
+</div>
+
+<style>
+  .modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 50;
+    transition: opacity 0.4s ease;
+    opacity: 1;
+  }
+
+  .modal-backdrop.fade-out {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .modal-hidden {
+    display: none;
+  }
+
+  .card {
+    max-width: 50rem;
+    max-height: 90vh;
+    padding: 2rem;
+    border-radius: 1rem;
+    background-color: white;
+    border: 5px solid #2d2d2d;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    font-family: sans-serif;
+    line-height: 1.7;
+    overflow-y: auto;
+    white-space: pre-line;
+    position: relative;
+
+    /* Firefox support */
+    scrollbar-width: thin;
+    scrollbar-color: #2d2d2d transparent;
+  }
+
+  .card::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  .card::-webkit-scrollbar-thumb {
+    background-color: #2d2d2d;
+    border-radius: 4px;
+  }
+
+  .accept-button {
+    margin-top: 2rem;
+    padding: 0.75rem 1.5rem;
+    background-color: #2d2d2d;
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+
+  .accept-button:hover {
+    background-color: #444;
+  }
+</style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const acceptBtn = document.getElementById("acceptBtn");
+    const modal = document.getElementById("modal");
+
+    acceptBtn.addEventListener("click", () => {
+      modal.classList.add("fade-out");
+
+      modal.addEventListener(
+        "transitionend",
+        () => {
+          modal.classList.add("modal-hidden");
+        },
+        { once: true }
+      );
+    });
+  });
+</script>

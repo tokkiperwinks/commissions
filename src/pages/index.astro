@@ -1,22 +1,17 @@
 ---
-import "../styles/box.css";
 import "../styles/global.css";
+import TermsModal from "../components/TermsModal.astro";
 ---
 
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
     <title>tokki commissions :o)</title>
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" href="/favicon.svg" />
   </head>
-  <body class="bg-checkerboard center-container">
-  <div class="squares">
-    <div class="square"></div>
-    <div class="square"></div>
-    <div class="square"></div>
-  </div>
-</body>
-
+  <body class="bg-checkerboard min-h-screen flex flex-col items-center justify-center relative p-4">
+    <TermsModal />
+    <h1 class="text-4xl p-8 z-0">penits</h1>
+  </body>
 </html>

@@ -19,5 +19,5 @@
   height: 8rem;
   border-radius: 1rem;
   background-color: white; /* ✅ White inside */
-  border: 2px solid #2d2d2d; /* ✅ Dark gray outline */
+  border: 5px solid #2d2d2d; /* ✅ Dark gray outline */
 }
