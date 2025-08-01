@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Checkerboard animation */
 @keyframes move-checker {
   0% {
     background-position: 0 0;
@@ -12,7 +11,6 @@
   }
 }
 
-/* Base body style */
 body {
   position: relative;
   z-index: 0;
@@ -20,7 +18,6 @@ body {
   overflow-x: hidden;
 }
 
-/* Animated checkerboard background */
 body::before {
   content: "";
   position: fixed;
@@ -31,7 +28,7 @@ body::before {
     linear-gradient(-45deg, #d6d3d1 25%, transparent 25%),
     linear-gradient(45deg, transparent 75%, #d6d3d1 75%),
     linear-gradient(-45deg, transparent 75%, #d6d3d1 75%);
-  background-color: #f5f5f4; /* Tailwind stone-100 */
+  background-color: #f5f5f4;
   background-size: 200px 200px;
   background-repeat: repeat;
   animation: move-checker 12s linear infinite;

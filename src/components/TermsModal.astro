@@ -56,20 +56,22 @@
 </div>
 
 <style>
-  .modal-backdrop {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.6);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 50;
-    transition: opacity 0.4s ease;
-    opacity: 1;
-  }
+	.modal-backdrop {
+	  position: fixed;
+	  top: 0;
+	  left: 0;
+	  width: 100vw;
+	  height: 100vh;
+	  background-color: rgba(0, 0, 0, 0.6);
+	  backdrop-filter: blur(8px); /* ✅ this adds the blur effect */
+	  -webkit-backdrop-filter: blur(8px); /* ✅ for Safari support */
+	  display: flex;
+	  justify-content: center;
+	  align-items: center;
+	  z-index: 50;
+	  transition: opacity 0.4s ease;
+	  opacity: 1;
+	}
 
   .modal-backdrop.fade-out {
     opacity: 0;
@@ -113,6 +115,7 @@
     padding: 0.75rem 1.5rem;
     background-color: #2d2d2d;
     color: white;
+	font-family: 'Fredoka', sans-serif;
     border: none;
     border-radius: 0.5rem;
     font-size: 1rem;
