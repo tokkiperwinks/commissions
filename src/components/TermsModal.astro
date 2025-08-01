@@ -14,7 +14,10 @@
         <li>I retain full rights to all artwork I create. Uploading or using my work in AI engines is strictly prohibited.</li>
         <li>Unless requested otherwise, I may post the final piece on social media, in my portfolio, or in my commission gallery.</li>
         <li>Prices are base estimates. Complexity or extra details may raise the final cost.</li>
-        <li>Reposting is allowed with proper credit: <strong>@tokkiperiwinkle</strong>.</li>
+        <li>
+		  Reposting is allowed with proper credit:
+		  <a href="https://x.com/tokkiperiwinkle" target="_blank" rel="noopener noreferrer" class="text-blue-600 underline">@tokkiperiwinkle</a>.
+		</li>
         <li>Please be patient. I have other commitments. Feel free to ask for updates.</li>
         <li>Provide visual references like character sheets, poses, or doodles to avoid mistakes.</li>
       </ul>
@@ -44,7 +47,7 @@
 	
 	<section class="mb-6">
 	<p>
-	By clicking accept, you agree to all of the yada yada yadas i said above :]
+	By commissioning me, you agree to all of the yada yada yadas i said above :]
 	</p>
 	</section>
     
@@ -78,23 +81,23 @@
   }
 
   .card {
-    max-width: 50rem;
-    max-height: 90vh;
-    padding: 2rem;
-    border-radius: 1rem;
-    background-color: white;
-    border: 5px solid #2d2d2d;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-    font-family: "Segoe UI", Roboto, sans-serif;
-    font-size: 1rem;
-    line-height: 1.6;
-    overflow-y: auto;
-    white-space: normal;
-    position: relative;
+	  max-width: 50rem;
+	  max-height: 90vh;
+	  padding: 2rem;
+	  border-radius: 1rem;
+	  background-color: white;
+	  border: 5px solid #2d2d2d;
+	  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+	  font-family: 'Fredoka', sans-serif;
+	  font-size: 1rem;
+	  line-height: 1.6;
+	  overflow-y: auto;
+	  white-space: normal;
+	  position: relative;
 
-    scrollbar-width: thin;
-    scrollbar-color: #2d2d2d transparent;
-  }
+	  scrollbar-width: thin;
+	  scrollbar-color: #2d2d2d transparent;
+	}
 
   .card::-webkit-scrollbar {
     width: 4px;
@@ -119,6 +122,32 @@
   .accept-button:hover {
     background-color: #444;
   }
+
+@keyframes bounceFall {
+  0% {
+    transform: translate(0, 0);
+  }
+  20% {
+    transform: translate(var(--x-move), -40px);
+  }
+  40% {
+    transform: translate(var(--x-move), 0);
+  }
+  60% {
+    transform: translate(calc(var(--x-move) * 1.5), -20px);
+  }
+  80% {
+    transform: translate(calc(var(--x-move) * 2), 0);
+  }
+  100% {
+    transform: translate(calc(var(--x-move) * 3), 200vh);
+    opacity: 0;
+  }
+}
+
+.fall-off {
+  animation: bounceFall 1s ease-in forwards;
+}
 </style>
 
 <script>
