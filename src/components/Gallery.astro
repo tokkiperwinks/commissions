@@ -65,6 +65,7 @@
       height: 100%;
       object-fit: cover;
       display: block;
+      transition: filter 0.3s ease;
     }
 
     .square-wrapper:hover .square {
@@ -75,45 +76,94 @@
       transform: translateY(12px);
     }
 
+    /* NSFW blur */
+    .square img[data-nsfw="true"] {
+      filter: blur(16px);
+    }
+	
+	.square-wrapper[data-nsfw="true"] .square::after {
+	  content: "";
+	  position: absolute;
+	  inset: 0;
+	  backdrop-filter: blur(8px) contrast(1.2);
+	  background-color: rgba(255, 255, 255, 0.05); /* optional foggy glass feel */
+	  z-index: 2;
+	  border-radius: 12px;
+	  pointer-events: none;
+	}
+
+	/* Optional: Add "NSFW" label */
+	.square-wrapper[data-nsfw="true"]::before {
+	  content: "NSFW";
+	  position: absolute;
+	  top: 8px;
+	  left: 8px;
+	  background: #e74c3c;
+	  color: white;
+	  font-size: 12px;
+	  padding: 2px 6px;
+	  border-radius: 4px;
+	  z-index: 3;
+	  font-weight: bold;
+	}
+
     /* Modal styles */
     .modal {
-      display: none;
       position: fixed;
       top: 0;
       left: 0;
       width: 100vw;
       height: 100vh;
       background-color: rgba(0, 0, 0, 0.8);
+      display: flex;
       justify-content: center;
       align-items: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
       z-index: 100;
     }
 
     .modal img {
-      max-width: 90%;
-      max-height: 90%;
+      max-width: 85vw;
+      max-height: 85vh;
       border-radius: 12px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      filter: none !important; /* Always clear in modal */
     }
 
-    .modal.show {
-      display: flex;
+    .modal.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal.active img {
+      opacity: 1;
+      transform: translateY(0);
     }
   </style>
 </head>
 <body>
 
   <div class="gallery-wrapper">
-    <div class="gallery">
-      <div class="square-wrapper"><div class="shadow"></div><div class="square"><img src="gallery/1.png" alt="1" /></div></div>
-      <div class="square-wrapper"><div class="shadow"></div><div class="square"><img src="gallery/2.png" alt="2" /></div></div>
-      <div class="square-wrapper"><div class="shadow"></div><div class="square"><img src="gallery/3.png" alt="3" /></div></div>
-      <div class="square-wrapper"><div class="shadow"></div><div class="square"><img src="gallery/4.png" alt="4" /></div></div>
-      <div class="square-wrapper"><div class="shadow"></div><div class="square"><img src="gallery/5.png" alt="5" /></div></div>
-      <div class="square-wrapper"><div class="shadow"></div><div class="square"><img src="gallery/6.png" alt="6" /></div></div>
-      <div class="square-wrapper"><div class="shadow"></div><div class="square"><img src="gallery/7.png" alt="7" /></div></div>
-      <div class="square-wrapper"><div class="shadow"></div><div class="square"><img src="gallery/8.png" alt="8" /></div></div>
-      <div class="square-wrapper"><div class="shadow"></div><div class="square"><img src="gallery/9.png" alt="9" /></div></div>
+        <div class="gallery">
+      <!-- You can generate these with JS too -->
+	<div class="square-wrapper"><div class="shadow"></div><div class="square"><img src="gallery/1.png" alt="1" /></div></div>
+	<div class="square-wrapper"><div class="shadow"></div><div class="square"><img src="gallery/2.png" alt="2" /></div></div>
+	<div class="square-wrapper"><div class="shadow"></div><div class="square"><img src="gallery/3.png" alt="3" /></div></div>
+	<div class="square-wrapper"><div class="shadow"></div><div class="square"><img src="gallery/4.png" alt="4" /></div></div>
+	<div class="square-wrapper"><div class="shadow"></div><div class="square"><img src="gallery/5.png" alt="5" /></div></div>
+	<div class="square-wrapper"><div class="shadow"></div><div class="square"><img src="gallery/6.png" alt="6" /></div></div>
+	<div class="square-wrapper"><div class="shadow"></div><div class="square"><img src="gallery/7.png" alt="7" /></div></div>
+	<div class="square-wrapper"><div class="shadow"></div><div class="square"><img src="gallery/8.png" alt="8" /></div></div>
+	<div class="square-wrapper"><div class="shadow"></div><div class="square"><img src="gallery/9.png" alt="9" /></div></div>
+	<div class="square-wrapper" data-nsfw="true"><div class="shadow"></div><div class="square"><img src="gallery/10.png" alt="10" /></div></div>
+	<div class="square-wrapper" data-nsfw="true"><div class="shadow"></div><div class="square"><img src="gallery/11.png" alt="11" /></div></div>
+	<div class="square-wrapper" data-nsfw="true"><div class="shadow"></div><div class="square"><img src="gallery/12.png" alt="12" /></div></div>
     </div>
+  </div>
   </div>
 
   <!-- Modal -->
@@ -129,13 +179,17 @@
     imageWrappers.forEach(img => {
       img.addEventListener('click', () => {
         modalImg.src = img.src;
-        modal.classList.add('show');
+        modal.classList.add('active');
       });
     });
 
     modal.addEventListener('click', () => {
-      modal.classList.remove('show');
+      modal.classList.remove('active');
+      setTimeout(() => {
+        modalImg.src = '';
+      }, 300); // match transition duration
     });
   </script>
+
 </body>
 </html>
