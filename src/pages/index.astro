@@ -3,6 +3,8 @@ import "../styles/global.css";
 import TermsModal from "../components/TermsModal.astro";
 import Gallery from "../components/Gallery.astro";
 import Intro from "../components/Intro.astro";
+import Socials from "../components/Socials.astro";
+import ArtRequest from "../components/ArtRequest.astro";
 import Footer from '../components/Footer.astro';
 ---
 
@@ -15,7 +17,7 @@ import Footer from '../components/Footer.astro';
     <link rel="icon" href="/favicon.svg" />
   </head>
   <body class="bg-checkerboard min-h-screen flex flex-col">
-    <TermsModal />
+	<TermsModal />
 
     <style>
       main {
@@ -35,6 +37,8 @@ import Footer from '../components/Footer.astro';
         <!-- Left side -->
         <div class="flex-1 flex flex-col items-start justify-start">
           <Intro />
+		  <Socials />
+		  <ArtRequest />
         </div>
 
         <!-- Right side -->
