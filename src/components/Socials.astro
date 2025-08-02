@@ -32,69 +32,101 @@
     gap: 1.5rem;
   }
 
-.social-button {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  background: black;
-  color: white;
-  border-radius: 9999px; /* Fully rounded for oblong shape */
-  padding: 0.75rem 1.2rem;
-  font-size: 0.85rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: transform 0.2s ease;
-  white-space: nowrap;
-}
+  /* Stack buttons on small screens */
+  @media (max-width: 640px) {
+    .intro-container {
+      flex-direction: column;
+      align-items: center;
+    }
 
-.social-button:hover {
-  transform: scale(1.05);
-}
+    .social-button {
+      width: 100%;
+      justify-content: center;
+      text-align: center;
+    }
+  }
 
-.social-button .icon {
-  width: 1.5rem;
-  height: 1.5rem;
-  object-fit: contain;
-  display: block;
-}
+  .social-button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: black;
+    color: white;
+    border-radius: 9999px;
+    padding: 0.75rem 1.2rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    white-space: nowrap;
+  }
 
-.social-text {
-  font-family: 'Fredoka', sans-serif;
-}
+  .social-button:hover {
+    transform: scale(1.05);
+  }
 
-.copy-tooltip {
-  position: absolute;
-  top: -2.8rem;
-  left: 50%;
-  transform: translateX(-50%);
-  background: #43a35b;
-  color: white;
-  padding: 0.5rem 0.75rem;
-  font-size: 0.75rem;
-  border-radius: 0.5rem;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
-  white-space: nowrap;
-  z-index: 10;
-}
+  .social-button .icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    object-fit: contain;
+    display: block;
+  }
 
-.copy-tooltip.show {
-  opacity: 1;
-}
+  .social-text {
+    font-family: 'Fredoka', sans-serif;
+  }
 
-.copy-tooltip::after {
-  content: "";
-  position: absolute;
-  top: 90%;
-  left: 50%;
-  transform: translateX(-50%);
-  border-width: 14px;
-  border-style: solid;
-  border-color: #43a35b transparent transparent transparent;
+  .copy-tooltip {
+    position: absolute;
+    top: -2.8rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #43a35b;
+    color: white;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.75rem;
+    border-radius: 0.5rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    white-space: nowrap;
+    z-index: 10;
+  }
+
+  .copy-tooltip.show {
+    opacity: 1;
+  }
+
+  .copy-tooltip::after {
+    content: "";
+    position: absolute;
+    top: 90%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 14px;
+    border-style: solid;
+    border-color: #43a35b transparent transparent transparent;
+  }
+  
+  @media (max-width: 640px) {
+  .intro-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .social-button {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .button-wrapper {
+    width: 100%;
+  }
 }
 
 </style>
+
 
 <!-- Buttons -->
 <div class="intro-wrapper">
@@ -107,13 +139,13 @@
     </a>
 
     <!-- Discord Button with Tooltip -->
-    <div class="relative">
-      <button id="discord-button" class="social-button oblong-button" aria-label="Discord">
-        <img src="discord.svg" alt="Discord" class="icon" />
-        <span class="social-text">Copy Discord Username</span>
-        <div id="tooltip" class="copy-tooltip">Copied Username!</div>
-      </button>
-    </div>
+	<div class="button-wrapper">
+	  <button id="discord-button" class="social-button oblong-button" aria-label="Discord">
+		<img src="discord.svg" alt="Discord" class="icon" />
+		<span class="social-text">Copy Discord Username</span>
+		<div id="tooltip" class="copy-tooltip">Copied Username!</div>
+	  </button>
+	</div>
   </section>
 </div>
 

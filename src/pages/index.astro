@@ -25,7 +25,16 @@ import Footer from '../components/Footer.astro';
       }
 
       @media (max-width: 768px) {
-        html {
+	  
+	    main {
+			max-width: 1600px;
+			margin: 0 auto;
+			padding: 3rem 2rem;
+			width: 100%;
+			transform: translateX(5%);
+		  }
+        
+		html {
           font-size: 13px;
         }
 

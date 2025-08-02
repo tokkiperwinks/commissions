@@ -1,5 +1,5 @@
 ---
-// No frontmatter needed
+  // No frontmatter needed
 ---
 
 <div id="modal" class="modal-backdrop">
@@ -15,9 +15,9 @@
         <li>Unless requested otherwise, I may post the final piece on social media, in my portfolio, or in my commission gallery.</li>
         <li>Prices are base estimates. Complexity or extra details may raise the final cost.</li>
         <li>
-		  Reposting is allowed with proper credit:
-		  <a href="https://x.com/tokkiperiwinkle" target="_blank" rel="noopener noreferrer" class="text-blue-600 underline">@tokkiperiwinkle</a>.
-		</li>
+          Reposting is allowed with proper credit:
+          <a href="https://x.com/tokkiperiwinkle" target="_blank" rel="noopener noreferrer" class="text-blue-600 underline">@tokkiperiwinkle</a>.
+        </li>
         <li>Please be patient. I have other commitments. Feel free to ask for updates.</li>
         <li>Provide visual references like character sheets, poses, or doodles to avoid mistakes.</li>
       </ul>
@@ -44,34 +44,34 @@
         <li>Approved files will be emailed as high-res PNGs and watermarked JPGs for posting.</li>
       </ul>
     </section>
-	
-	<section class="mb-6">
-	<p>
-	By commissioning me, you agree to all of the yada yada yadas i said above :]
-	</p>
-	</section>
-    
-	<button class="accept-button" id="acceptBtn">Accept</button>
+
+    <section class="mb-6">
+      <p>
+        By commissioning me, you agree to all of the yada yada yadas I said above :]
+      </p>
+    </section>
+
+    <button class="accept-button" id="acceptBtn">Accept</button>
   </div>
 </div>
 
 <style>
-	.modal-backdrop {
-	  position: fixed;
-	  top: 0;
-	  left: 0;
-	  width: 100vw;
-	  height: 100vh;
-	  background-color: rgba(0, 0, 0, 0.6);
-	  backdrop-filter: blur(8px); /* ✅ this adds the blur effect */
-	  -webkit-backdrop-filter: blur(8px); /* ✅ for Safari support */
-	  display: flex;
-	  justify-content: center;
-	  align-items: center;
-	  z-index: 50;
-	  transition: opacity 0.4s ease;
-	  opacity: 1;
-	}
+  .modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 50;
+    transition: opacity 0.4s ease;
+    opacity: 1;
+  }
 
   .modal-backdrop.fade-out {
     opacity: 0;
@@ -83,23 +83,23 @@
   }
 
   .card {
-	  max-width: 50rem;
-	  max-height: 90vh;
-	  padding: 2rem;
-	  border-radius: 1rem;
-	  background-color: white;
-	  border: 5px solid #2d2d2d;
-	  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-	  font-family: 'Fredoka', sans-serif;
-	  font-size: 1rem;
-	  line-height: 1.6;
-	  overflow-y: auto;
-	  white-space: normal;
-	  position: relative;
+    max-width: 50rem;
+    max-height: 90vh;
+    padding: 2rem;
+    border-radius: 1rem;
+    background-color: white;
+    border: 5px solid #2d2d2d;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    font-family: 'Fredoka', sans-serif;
+    font-size: 1rem;
+    line-height: 1.6;
+    overflow-y: auto;
+    white-space: normal;
+    position: relative;
 
-	  scrollbar-width: thin;
-	  scrollbar-color: #2d2d2d transparent;
-	}
+    scrollbar-width: thin;
+    scrollbar-color: #2d2d2d transparent;
+  }
 
   .card::-webkit-scrollbar {
     width: 4px;
@@ -115,7 +115,7 @@
     padding: 0.75rem 1.5rem;
     background-color: #2d2d2d;
     color: white;
-	font-family: 'Fredoka', sans-serif;
+    font-family: 'Fredoka', sans-serif;
     border: none;
     border-radius: 0.5rem;
     font-size: 1rem;
@@ -126,31 +126,55 @@
     background-color: #444;
   }
 
-@keyframes bounceFall {
-  0% {
-    transform: translate(0, 0);
+  @keyframes bounceFall {
+    0% {
+      transform: translate(0, 0);
+    }
+    20% {
+      transform: translate(var(--x-move), -40px);
+    }
+    40% {
+      transform: translate(var(--x-move), 0);
+    }
+    60% {
+      transform: translate(calc(var(--x-move) * 1.5), -20px);
+    }
+    80% {
+      transform: translate(calc(var(--x-move) * 2), 0);
+    }
+    100% {
+      transform: translate(calc(var(--x-move) * 3), 200vh);
+      opacity: 0;
+    }
   }
-  20% {
-    transform: translate(var(--x-move), -40px);
-  }
-  40% {
-    transform: translate(var(--x-move), 0);
-  }
-  60% {
-    transform: translate(calc(var(--x-move) * 1.5), -20px);
-  }
-  80% {
-    transform: translate(calc(var(--x-move) * 2), 0);
-  }
-  100% {
-    transform: translate(calc(var(--x-move) * 3), 200vh);
-    opacity: 0;
-  }
-}
 
-.fall-off {
-  animation: bounceFall 1s ease-in forwards;
-}
+  .fall-off {
+    animation: bounceFall 1s ease-in forwards;
+  }
+
+  /* 🔧 MOBILE FIX: make modal card fill screen on small viewports */
+  @media (max-width: 640px) {
+    .card {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      max-width: none;
+      max-height: none;
+      border-radius: 0;
+      border: none;
+      padding: 1.25rem;
+      box-sizing: border-box;
+      overflow-y: auto;
+      z-index: 100;
+    }
+
+    .accept-button {
+      width: 100%;
+      box-sizing: border-box;
+    }
+  }
 </style>
 
 <script>
@@ -158,12 +182,17 @@
     const acceptBtn = document.getElementById("acceptBtn");
     const modal = document.getElementById("modal");
 
+    // Lock scroll when modal is shown
+    document.body.style.overflow = "hidden";
+
     acceptBtn.addEventListener("click", () => {
       modal.classList.add("fade-out");
+
       modal.addEventListener(
         "transitionend",
         () => {
           modal.classList.add("modal-hidden");
+          document.body.style.overflow = ""; // restore scroll
         },
         { once: true }
       );
