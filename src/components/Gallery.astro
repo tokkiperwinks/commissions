@@ -12,10 +12,11 @@
     }
 
     body {
-      background: #fff;
-      padding: 0 24px 5vh;
-      font-family: sans-serif;
-    }
+  background: #fff;
+  padding: 0 24px 5vh;
+  font-family: 'Fredoka', sans-serif;
+}
+
 
 	.gallery-wrapper {
 	  width: 90vmin;
@@ -185,10 +186,16 @@
   </style>
 </head>
 <body>
-
   <div class="gallery-wrapper">
-        <div class="gallery">
+    <h1 style="text-align: center; margin-top: 1vh; font-size: 2rem;">
+  Profile Picture Examples
+</h1>
+<p style="text-align: center; margin-top: 1vh; margin-bottom: 2.5vh; font-size: 1.5rem; color: #444;">
+    Flat Colors : $15 || Full Detail : 20$
+  </p>
+    <div class="gallery">
       <!-- You can generate these with JS too -->
+
 	<div class="square-wrapper"><div class="shadow"></div><div class="square"><img src="gallery/1.png" alt="1" /></div></div>
 	<div class="square-wrapper"><div class="shadow"></div><div class="square"><img src="gallery/2.png" alt="2" /></div></div>
 	<div class="square-wrapper"><div class="shadow"></div><div class="square"><img src="gallery/3.png" alt="3" /></div></div>
@@ -201,9 +208,13 @@
 	<div class="square-wrapper" data-nsfw="true"><div class="shadow"></div><div class="square"><img src="gallery/10.png" alt="10" /></div></div>
 	<div class="square-wrapper" data-nsfw="true"><div class="shadow"></div><div class="square"><img src="gallery/11.png" alt="11" /></div></div>
 	<div class="square-wrapper" data-nsfw="true"><div class="shadow"></div><div class="square"><img src="gallery/12.png" alt="12" /></div></div>
+
     </div>
+  
   </div>
   </div>
+
+
 
   <!-- Modal -->
   <div class="modal" id="image-modal">

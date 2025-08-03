@@ -33,4 +33,13 @@ body::before {
   background-repeat: repeat;
   animation: move-checker 12s linear infinite;
   filter: blur(6px);
+  transform: translate(0, 0);
+  transition: transform 0.3s ease;
+}
+
+/* 📱 On mobile: shift background by 30px */
+@media (max-width: 768px) {
+  body::before {
+    transform: translate(30px, 30px);
+  }
 }
