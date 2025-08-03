@@ -11,18 +11,35 @@
   }
 }
 
+/* ✅ Scroll fix */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto; /* Set to 'hidden' if you want zero scroll */
+}
+
 body {
   position: relative;
   z-index: 0;
   background-color: transparent;
-  overflow-x: hidden;
+  scrollbar-width: none;         /* Firefox */
+  -ms-overflow-style: none;      /* IE and Edge */
 }
 
+body::-webkit-scrollbar {
+  display: none;                 /* Chrome, Safari */
+}
+
+
+/* ✅ Background stays fixed and does not affect scroll */
 body::before {
   content: "";
   position: fixed;
   inset: 0;
   z-index: -1;
+  pointer-events: none;
   background-image:
     linear-gradient(45deg, #d6d3d1 25%, transparent 25%),
     linear-gradient(-45deg, #d6d3d1 25%, transparent 25%),
@@ -37,7 +54,7 @@ body::before {
   transition: transform 0.3s ease;
 }
 
-/* 📱 On mobile: shift background by 30px */
+/* 📱 Mobile: shift background */
 @media (max-width: 768px) {
   body::before {
     transform: translate(30px, 30px);
