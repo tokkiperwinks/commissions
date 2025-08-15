@@ -1,123 +1,124 @@
+---
+import "../styles/colors.css";
+---
+
 <style>
-  .intro-wrapper {
-    position: relative;
-    width: 100%;
-    max-width: 600px;
-    margin: 3.2rem auto 0;
-  }
+.intro-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  margin: 3.2rem auto 0;
+}
 
-  .intro-shadow {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: black;
-    border-radius: 1rem;
-    transform: translateY(8px);
-    z-index: 0;
-  }
+.intro-shadow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--color-shadow);
+  border-radius: 1rem;
+  transform: translateY(8px);
+  z-index: 0;
+}
 
-  .intro-container {
-    position: relative;
-    padding: 2rem;
-    background-color: white;
-    border-radius: 1rem;
-    font-family: 'Fredoka', sans-serif;
-    z-index: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1.5rem;
-  }
+.intro-container {
+  position: relative;
+  padding: 2rem;
+  background-color: var(--color-bg);
+  border-radius: 1rem;
+  font-family: 'Fredoka', sans-serif;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
 
-  .intro-heading {
-    font-size: 2rem;
-    font-weight: 700;
-    margin-bottom: 0.5rem;
-    text-align: center;
-  }
+.intro-heading {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  text-align: center;
+  color: var(--color-text);
+}
 
-  .intro-subheading {
-    font-size: 1.25rem;
-    font-weight: 400;
-    color: #555;
-    line-height: 1.75;
-    text-align: center;
-    margin-bottom: 1rem;
-  }
+.intro-subheading {
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: var(--color-text-light);
+  line-height: 1.75;
+  text-align: center;
+  margin-bottom: 1rem;
+}
 
-  /* Social buttons container */
-  .social-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 1.5rem;
-    flex-wrap: wrap;
-  }
+/* Social buttons */
+.social-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
 
-  .social-button {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    background: black;
-    color: white;
-    border-radius: 9999px;
-    padding: 0.75rem 1.2rem;
-    font-size: 0.85rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: transform 0.2s ease;
-    white-space: nowrap;
-    text-decoration: none;
-  }
+.social-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--color-shadow);
+  color: var(--color-text-inverted);
+  border-radius: 9999px;
+  padding: 0.75rem 1.2rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  white-space: nowrap;
+  text-decoration: none;
+  position: relative; /* ✅ so tooltip positions relative to button */
+}
 
-  .social-button:hover {
-    transform: scale(1.05);
-  }
+.social-button:hover {
+  transform: scale(1.05);
+}
 
-  .social-button .icon {
-    width: 1.5rem;
-    height: 1.5rem;
-    object-fit: contain;
-    display: block;
-  }
+.social-button .icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  object-fit: contain;
+  display: block;
+}
 
-  .social-text {
-    font-family: 'Fredoka', sans-serif;
-  }
+.copy-tooltip {
+  position: absolute;
+  top: -2.8rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--color-tooltip);
+  color: var(--color-tooltip-text);
+  padding: 0.5rem 0.75rem;
+  font-size: 0.75rem;
+  border-radius: 0.5rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  white-space: nowrap;
+  z-index: 10;
+}
 
-  /* Copy tooltip */
-  .copy-tooltip {
-    position: absolute;
-    top: -2.8rem;
-    left: 50%;
-    transform: translateX(-50%);
-    background: #43a35b;
-    color: white;
-    padding: 0.5rem 0.75rem;
-    font-size: 0.75rem;
-    border-radius: 0.5rem;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.3s ease;
-    white-space: nowrap;
-    z-index: 10;
-  }
+.copy-tooltip.show {
+  opacity: 1;
+}
 
-  .copy-tooltip.show {
-    opacity: 1;
-  }
-
-  .copy-tooltip::after {
-    content: "";
-    position: absolute;
-    top: 90%;
-    left: 50%;
-    transform: translateX(-50%);
-    border-width: 14px;
-    border-style: solid;
-    border-color: #43a35b transparent transparent transparent;
-  }
+.copy-tooltip::after {
+  content: "";
+  position: absolute;
+  top: 90%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 14px;
+  border-style: solid;
+  border-color: var(--color-tooltip) transparent transparent transparent;
+}
 
   /* Mobile adjustments */
   @media (max-width: 640px) {
@@ -157,12 +158,12 @@
       </a>
 
       <!-- Discord -->
-      <div class="button-wrapper" style="position: relative;">
-        <button id="discord-button" class="social-button oblong-button" aria-label="Discord">
-          <img src="discord.svg" alt="Discord" class="icon" />
-          <span class="social-text">Copy Discord Username</span>
-        </button>
-        <div id="tooltip" class="copy-tooltip">Copied Username!</div>
+		<!-- Discord -->
+		<a href="#" id="discord-button" class="social-button oblong-button" aria-label="Discord">
+		  <img src="discord.svg" alt="Discord" class="icon" />
+		  <span class="social-text">tokkiperiwinkle</span>
+		  <div id="tooltip" class="copy-tooltip">Copied Username!</div>
+		</a>
       </div>
     </div>
   </section>
@@ -175,7 +176,7 @@
 
     if (discordBtn && tooltip) {
       discordBtn.addEventListener("click", (e) => {
-        e.preventDefault();
+        e.preventDefault(); // stop link navigation
         navigator.clipboard.writeText("tokkiperiwinkle")
           .then(() => {
             tooltip.classList.add("show");

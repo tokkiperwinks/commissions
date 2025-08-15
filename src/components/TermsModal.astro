@@ -1,3 +1,7 @@
+---
+import "../styles/colors.css";
+---
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,7 +18,7 @@
       inset: 0;
       width: 100vw;
       height: 100vh;
-      background-color: rgba(0, 0, 0, 0.6);
+      background-color: var(--color-overlay-light);
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
       display: flex;
@@ -44,8 +48,8 @@
       width: 90vw;
       padding: 2rem;
       border-radius: 1rem;
-      background-color: white;
-      border: 5px solid #2d2d2d;
+      background-color: var(--color-bg);
+	  border: 5px solid var(--color-border);
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
       font-family: 'Fredoka', sans-serif;
       font-size: 1rem;
@@ -62,15 +66,15 @@
     }
 
     .card::-webkit-scrollbar-thumb {
-      background-color: #2d2d2d;
+      background-color: var(--color-border);
       border-radius: 4px;
     }
 
     .accept-button {
       margin-top: 2rem;
       padding: 0.75rem 1.5rem;
-      background-color: #2d2d2d;
-      color: white;
+      background-color: var(--color-border);
+	  color: var(--color-bg);
       font-family: 'Fredoka', sans-serif;
       border: none;
       border-radius: 0.5rem;
@@ -79,7 +83,7 @@
     }
 
     .accept-button:hover {
-      background-color: #444;
+      background-color: var(--color-subheading);
     }
 
     @keyframes bounceFall {
@@ -125,8 +129,8 @@
       width: 90vw;
       padding: 2rem;
       border-radius: 1rem;
-      background-color: white;
-      border: 5px solid #2d2d2d;
+      background-color: var(--color-bg);
+	  border: 5px solid var(--color-border);
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
       font-family: 'Fredoka', sans-serif;
       font-size: 1rem;
