@@ -108,12 +108,35 @@
       animation: bounceFall 1s ease-in forwards;
     }
 	
-  @media (max-width: 768px) {
-  
-  .modal-backdrop {
-  width: 111vw;
-  height: 111vh;
-  }
+	  @media (max-width: 768px) {
+	  
+	  .modal-backdrop {
+	  width: 111vw;
+	  height: 111vh;
+	  }
+	  
+	  .card {
+      position: fixed;
+      top: 46%;
+      left: 45%;
+      transform: translate(-50%, -50%);
+      max-width: 23rem;
+      max-height: 80vh;
+      width: 90vw;
+      padding: 2rem;
+      border-radius: 1rem;
+      background-color: white;
+      border: 5px solid #2d2d2d;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1rem;
+      line-height: 1.6;
+      overflow-y: auto;
+      white-space: normal;
+      scrollbar-width: thin;
+      scrollbar-color: #2d2d2d transparent;
+      z-index: 100;
+    }
   }
   </style>
 </head>

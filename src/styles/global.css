@@ -54,9 +54,18 @@ body::before {
   transition: transform 0.3s ease;
 }
 
-/* 📱 Mobile: shift background */
 @media (max-width: 768px) {
   body::before {
-    transform: translate(30px, 30px);
+    content: "";
+    background: repeating-linear-gradient(
+      45deg,
+      #e5e5e5,
+      #e5e5e5 10px,
+      #f5f5f5 10px,
+      #f5f5f5 20px
+    );
+    animation: none;
+    filter: none;
+    transform: none;
   }
 }

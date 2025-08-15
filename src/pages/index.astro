@@ -3,7 +3,6 @@ import "../styles/global.css";
 import TermsModal from "../components/TermsModal.astro";
 import Gallery from "../components/Gallery.astro";
 import Intro from "../components/Intro.astro";
-import Socials from "../components/Socials.astro";
 import ArtRequest from "../components/ArtRequest.astro";
 import Footer from '../components/Footer.astro';
 ---
@@ -14,7 +13,7 @@ import Footer from '../components/Footer.astro';
     <meta charset="utf-8" />
     <title>tokki commissions :o)</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" href="/favicon.svg" />
+    <link rel="icon" href="favicon.svg" />
 
     <style>
       main {
@@ -31,7 +30,6 @@ import Footer from '../components/Footer.astro';
 			margin: 0 auto;
 			padding: 3rem 2rem;
 			width: 100%;
-			transform: translateX(5%);
 		  }
         
 		html {
@@ -40,11 +38,6 @@ import Footer from '../components/Footer.astro';
 
         main {
           padding: 2rem 1rem;
-        }
-
-        body {
-          transform: scale(0.9);
-          transform-origin: top left;
         }
 
         .flex {
@@ -85,7 +78,6 @@ import Footer from '../components/Footer.astro';
         <!-- Left side -->
         <div class="flex-1 flex flex-col items-start justify-start">
           <Intro />
-          <Socials />
           <ArtRequest />
         </div>
 

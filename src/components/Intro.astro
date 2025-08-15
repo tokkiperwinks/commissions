@@ -1,14 +1,9 @@
----
----
-
 <style>
   .intro-wrapper {
     position: relative;
     width: 100%;
     max-width: 600px;
-    margin: 3.2rem auto 0; /* added top margin to lower the box */
-	
-	
+    margin: 3.2rem auto 0;
   }
 
   .intro-shadow {
@@ -30,12 +25,17 @@
     border-radius: 1rem;
     font-family: 'Fredoka', sans-serif;
     z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
   }
 
   .intro-heading {
     font-size: 2rem;
     font-weight: 700;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
+    text-align: center;
   }
 
   .intro-subheading {
@@ -43,15 +43,146 @@
     font-weight: 400;
     color: #555;
     line-height: 1.75;
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+
+  /* Social buttons container */
+  .social-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .social-button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: black;
+    color: white;
+    border-radius: 9999px;
+    padding: 0.75rem 1.2rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    white-space: nowrap;
+    text-decoration: none;
+  }
+
+  .social-button:hover {
+    transform: scale(1.05);
+  }
+
+  .social-button .icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    object-fit: contain;
+    display: block;
+  }
+
+  .social-text {
+    font-family: 'Fredoka', sans-serif;
+  }
+
+  /* Copy tooltip */
+  .copy-tooltip {
+    position: absolute;
+    top: -2.8rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #43a35b;
+    color: white;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.75rem;
+    border-radius: 0.5rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    white-space: nowrap;
+    z-index: 10;
+  }
+
+  .copy-tooltip.show {
+    opacity: 1;
+  }
+
+  .copy-tooltip::after {
+    content: "";
+    position: absolute;
+    top: 90%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 14px;
+    border-style: solid;
+    border-color: #43a35b transparent transparent transparent;
+  }
+
+  /* Mobile adjustments */
+  @media (max-width: 640px) {
+    .social-buttons {
+      flex-direction: column;
+      align-items: center;
+      width: 50%;
+	  transform: translateX(-10%);
+    }
+    .social-button {
+      width: 100%;
+      justify-content: center;
+      text-align: center;
+    }
   }
 </style>
 
 <div class="intro-wrapper">
   <div class="intro-shadow"></div>
   <section class="intro-container">
-<h1 class="intro-heading text-center">Welcome to my commissions page!</h1>
+    <h1 class="intro-heading">Welcome to my commissions page!</h1>
     <p class="intro-subheading">
-a
-    </p>
+	Hihi!! Welcome and thank you for your interest in my art!<br>
+	This site is only for price listings and artwork samples,<br>
+	please contact me through discord only!<br>
+	I will get to you as soon as possible!<br><br>
+	
+	Check out my Twitter for more artworks! I dont post all of<br>
+	them here :o)
+	</p>
+
+    <div class="social-buttons">
+      <!-- Twitter -->
+      <a href="https://x.com/tokkiperiwinkle" target="_blank" class="social-button oblong-button" aria-label="Twitter">
+        <img src="twitter.svg" alt="Twitter" class="icon" />
+        <span class="social-text">@tokkiperiwinkle</span>
+      </a>
+
+      <!-- Discord -->
+      <div class="button-wrapper" style="position: relative;">
+        <button id="discord-button" class="social-button oblong-button" aria-label="Discord">
+          <img src="discord.svg" alt="Discord" class="icon" />
+          <span class="social-text">Copy Discord Username</span>
+        </button>
+        <div id="tooltip" class="copy-tooltip">Copied Username!</div>
+      </div>
+    </div>
   </section>
 </div>
+
+<script is:global>
+  document.addEventListener("DOMContentLoaded", () => {
+    const discordBtn = document.getElementById("discord-button");
+    const tooltip = document.getElementById("tooltip");
+
+    if (discordBtn && tooltip) {
+      discordBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        navigator.clipboard.writeText("tokkiperiwinkle")
+          .then(() => {
+            tooltip.classList.add("show");
+            setTimeout(() => tooltip.classList.remove("show"), 1200);
+          })
+          .catch(err => console.error("Clipboard error:", err));
+      });
+    }
+  });
+</script>
