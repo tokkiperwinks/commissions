@@ -1,55 +1,83 @@
----
----
-
-<button id="theme-toggle" aria-label="Toggle Theme">
-  🌙
-</button>
+<!-- Wrapper gives us two layers: shadow (behind) and the button (front) -->
+<div class="toggle-wrap">
+  <span class="toggle-shadow" aria-hidden="true"></span>
+  <button id="theme-toggle" aria-label="Toggle Theme">
+    <svg id="bulb-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28">
+      <path fill="currentColor" d="M9 21h6v-1H9v1zm3-19a7 7 0 0 0-4 12.75V18a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-3.25A7 7 0 0 0 12 2z"/>
+    </svg>
+  </button>
+</div>
 
 <style>
-#theme-toggle {
+.toggle-wrap {
   position: fixed;
   top: 1rem;
   right: 1rem;
+  width: 60px;
+  height: 60px;
   z-index: 1000;
-
-  background: var(--color-bg);
-  color: var(--color-text);
-  padding: 8px 12px;
-  border: 1px solid var(--color-border);
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 1.2rem;
-  transition: background 0.3s, color 0.3s;
-
-  /* Prevent scrollbar trigger */
-  box-sizing: border-box;
+  opacity: 0.2;
+  transition: opacity 0.3s ease;
 }
-html, body {
-  overflow-x: hidden;
+
+.toggle-wrap:hover {
+  opacity: 1;
+}
+
+#theme-toggle,
+.toggle-shadow {
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  transition: transform 0.2s ease;
+}
+
+.toggle-shadow {
+  background: var(--color-shadow);
+  transform: translateY(8px);
+  z-index: 0;
+}
+
+#theme-toggle {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  user-select: none;
+  z-index: 1;
+  color: var(--bulb-color); /* Controlled by JS */
+}
+
+.toggle-wrap:hover #theme-toggle { transform: translateY(-4px); }
+.toggle-wrap:hover .toggle-shadow { transform: translateY(12px); }
+
+/* Default bulb colors */
+:root {
+  --bulb-color: #555; /* Off */
+}
+
+[data-theme="light"] {
+  --bulb-color: #ffcc33; /* On */
 }
 </style>
 
 <script>
-  const button = document.getElementById("theme-toggle");
+const button = document.getElementById("theme-toggle");
 
-  // Load saved theme
-  if (localStorage.getItem("theme")) {
-    document.documentElement.setAttribute(
-      "data-theme",
-      localStorage.getItem("theme")
-    );
-    updateIcon(localStorage.getItem("theme"));
-  }
+// Load saved theme
+if (localStorage.getItem("theme")) {
+  const savedTheme = localStorage.getItem("theme");
+  document.documentElement.setAttribute("data-theme", savedTheme);
+} else {
+  document.documentElement.setAttribute("data-theme", "dark");
+}
 
-  button.addEventListener("click", () => {
-    let currentTheme = document.documentElement.getAttribute("data-theme");
-    let targetTheme = currentTheme === "dark" ? "light" : "dark";
-    document.documentElement.setAttribute("data-theme", targetTheme);
-    localStorage.setItem("theme", targetTheme);
-    updateIcon(targetTheme);
-  });
-
-  function updateIcon(theme) {
-    button.textContent = theme === "dark" ? "🌞" : "🌙";
-  }
+button.addEventListener("click", () => {
+  let currentTheme = document.documentElement.getAttribute("data-theme");
+  let targetTheme = currentTheme === "dark" ? "light" : "dark";
+  document.documentElement.setAttribute("data-theme", targetTheme);
+  localStorage.setItem("theme", targetTheme);
+});
 </script>
