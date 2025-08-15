@@ -9,6 +9,12 @@
 </div>
 
 <style>
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* ✅ No horizontal scrollbar */
+}
+
 .toggle-wrap {
   position: fixed;
   top: 1rem;
@@ -47,20 +53,17 @@
   cursor: pointer;
   user-select: none;
   z-index: 1;
-  color: var(--bulb-color); /* Controlled by JS */
+  color: var(--bulb-color);
 }
 
-.toggle-wrap:hover #theme-toggle { transform: translateY(-4px); }
-.toggle-wrap:hover .toggle-shadow { transform: translateY(12px); }
-
-/* Default bulb colors */
-:root {
-  --bulb-color: #555; /* Off */
+.toggle-wrap:hover #theme-toggle {
+  transform: translateY(-4px);
 }
 
-[data-theme="light"] {
-  --bulb-color: #ffcc33; /* On */
+.toggle-wrap:hover .toggle-shadow {
+  transform: translateY(12px);
 }
+
 </style>
 
 <script>

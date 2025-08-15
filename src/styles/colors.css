@@ -45,3 +45,28 @@
   --checker-color-mobile-1: #2a2a2a;
   --checker-color-mobile-2: #1a1a1a;
 }
+
+/* Put this at the very bottom of colors.css */
+:root {
+  --theme-transition-duration: 0.4s; /* change this to adjust speed */
+}
+
+:root,
+:root[data-theme="light"],
+:root[data-theme="dark"] {
+  transition:
+    background-color var(--theme-transition-duration) ease,
+    color var(--theme-transition-duration) ease,
+    border-color var(--theme-transition-duration) ease,
+    fill var(--theme-transition-duration) ease,
+    stroke var(--theme-transition-duration) ease;
+}
+
+html, body, * {
+  transition:
+    background-color var(--theme-transition-duration) ease,
+    color var(--theme-transition-duration) ease,
+    border-color var(--theme-transition-duration) ease,
+    fill var(--theme-transition-duration) ease,
+    stroke var(--theme-transition-duration) ease;
+}
