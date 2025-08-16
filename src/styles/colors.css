@@ -2,54 +2,84 @@
 @tailwind components;
 @tailwind utilities;
 
+/* -------------------- */
+/* Light Theme Colors    */
+/* -------------------- */
 :root {
-  --color-bg: #ffffff;
-  --color-text: #000000;
-  --color-text-inverted: #ffffff;
-  --color-text-light: #555555;
-  --color-subheading: #444444;
-  --color-shadow: #000000;
-  --color-tooltip: #43a35b;
-  --color-tooltip-text: #ffffff;
-  --color-border: #2d2d2d;
-  --color-border-light: #ccc;
-  --color-overlay: rgba(0, 0, 0, 0.8);
-  --color-overlay-light: rgba(0, 0, 0, 0.6);
-  --color-danger: #e74c3c;
-  --color-danger-text: #ffffff;
+  /* General Colors */
+  --color-bg:                #fefefe;      /* softer white */
+  --color-text:              #1a1a1a;      /* softer black */
+  --color-text-inverted:     #ffffff;
+  --color-text-light:        #555555;
+  --color-subheading:        #666666;
 
-  --checker-color-1: #d6d3d1;
-  --checker-color-2: #f5f5f4;
-  --checker-color-mobile-1: #e5e5e5;
-  --checker-color-mobile-2: #f5f5f5;
-  
-    --tokkigif: brightness(0) saturate(100%);
+  /* Shadows & Borders */
+  --color-shadow:            rgba(0,0,0,0.1);
+  --color-border:            #2d2d2d;
+  --color-border-light:      #ccc;
+
+  /* Overlays */
+  --color-overlay:           rgba(0, 0, 0, 0.8);
+  --color-overlay-light:     rgba(0, 0, 0, 0.6);
+
+  /* Tooltip & Alerts */
+  --color-tooltip:           #3cb371;      /* softer green */
+  --color-tooltip-text:      #ffffff;
+  --color-danger:            #ff4d4f;      /* modern red */
+  --color-danger-text:       #ffffff;
+
+  /* Checkerboard */
+  --checker-color-1:         #e2e2e2;
+  --checker-color-2:         #f9f9f9;
+  --checker-color-mobile-1:  #e5e5e5;
+  --checker-color-mobile-2:  #f5f5f5;
+
+  /* Image adjustments */
+  --tokkigif:                brightness(0) saturate(100%);
+
+  /* Transition */
+  --theme-transition-duration: 0.4s;
 }
 
+/* -------------------- */
+/* Dark Theme Colors     */
+/* -------------------- */
 :root[data-theme="dark"] {
-  --color-bg: #121212;
-  --color-text: #ffffff;
-  --color-text-inverted: #ffffff;
-  --color-text-light: #bbbbbb;
-  --color-subheading: #aaaaaa;
-  --color-shadow: #000000;
-  --color-tooltip: #43a35b;
-  --color-tooltip-text: #ffffff;
-  --color-border: #555555;
-  --color-border-light: #777777;
-  --color-overlay: rgba(255, 255, 255, 0.85);
-  --color-overlay-light: rgba(255, 255, 255, 0.6);
-  --color-danger: #000000;
-  --color-danger-text: #ff6b5a;
+  /* General Colors */
+  --color-bg:                #181818;
+  --color-text:              #f5f5f5;
+  --color-text-inverted:     #ffffff;
+  --color-text-light:        #cccccc;
+  --color-subheading:        #999999;
 
-  --checker-color-1: #3a3a3a;
-  --checker-color-2: #1a1a1a;
-  --checker-color-mobile-1: #2a2a2a;
-  --checker-color-mobile-2: #1a1a1a;
-  
-  --tokkigif: brightness(0) invert(1);
+  /* Shadows & Borders */
+  --color-shadow:            rgba(0,0,0,0.2);
+  --color-border:            #555555;
+  --color-border-light:      #777777;
+
+  /* Overlays */
+  --color-overlay:           rgba(255, 255, 255, 0.85);
+  --color-overlay-light:     rgba(255, 255, 255, 0.6);
+
+  /* Tooltip & Alerts */
+  --color-tooltip:           #3cb371;
+  --color-tooltip-text:      #f5f5f5;
+  --color-danger:            #ff4d4f;
+  --color-danger-text:       #ffffff;
+
+  /* Checkerboard */
+  --checker-color-1:         #2a2a2a;
+  --checker-color-2:         #1f1f1f;
+  --checker-color-mobile-1:  #2a2a2a;
+  --checker-color-mobile-2:  #1a1a1a;
+
+  /* Image adjustments */
+  --tokkigif:                brightness(0) invert(1);
 }
 
+/* -------------------- */
+/* Smooth Transitions    */
+/* -------------------- */
 :root,
 :root[data-theme="light"],
 :root[data-theme="dark"] {
@@ -68,8 +98,4 @@ html, body, * {
     border-color var(--theme-transition-duration) ease,
     fill var(--theme-transition-duration) ease,
     stroke var(--theme-transition-duration) ease;
-}
-
-:root {
-  --theme-transition-duration: 0.4s;
 }
