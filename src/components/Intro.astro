@@ -48,7 +48,7 @@ import "../styles/colors.css";
   font-weight: 400;
   color: var(--color-text-light);
   line-height: 1.75;
-  text-align: center;
+  text-align: justify;
   margin-bottom: 1rem;
 }
 
@@ -134,12 +134,27 @@ import "../styles/colors.css";
       text-align: center;
     }
   }
+	.tokkigif {
+	  width: 100%;          /* Fill the width of the container */
+	  max-width: 400px;     /* Optional: limit max width */
+	  display: flex;
+	  justify-content: center;
+	  filter: var(--tokkigif)
+	}
+
+	.tokkigif img {
+	  width: 100%;          /* Make the image scale to container width */
+	  height: auto;         /* Maintain aspect ratio */
+	  object-fit: contain;  /* Ensure the whole image fits inside */
+	  border-radius: 1rem;  /* Optional: match container style */
+	}
 </style>
 
 <div class="intro-wrapper">
   <div class="intro-shadow"></div>
   <section class="intro-container">
     <h1 class="intro-heading">Welcome to my commissions page!</h1>
+	<div class="tokkigif"><img src="evil tokki.gif" alt="3" /></div>
     <p class="intro-subheading">
 	Hihi!! Welcome and thank you for your interest in my art!<br>
 	This site is only for price listings and artwork samples,<br>

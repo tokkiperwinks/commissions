@@ -22,6 +22,8 @@
   --checker-color-2: #f5f5f4;
   --checker-color-mobile-1: #e5e5e5;
   --checker-color-mobile-2: #f5f5f5;
+  
+    --tokkigif: brightness(0) saturate(100%);
 }
 
 :root[data-theme="dark"] {
@@ -44,11 +46,8 @@
   --checker-color-2: #1a1a1a;
   --checker-color-mobile-1: #2a2a2a;
   --checker-color-mobile-2: #1a1a1a;
-}
-
-/* Put this at the very bottom of colors.css */
-:root {
-  --theme-transition-duration: 0.4s; /* change this to adjust speed */
+  
+  --tokkigif: brightness(0) invert(1);
 }
 
 :root,
@@ -69,4 +68,8 @@ html, body, * {
     border-color var(--theme-transition-duration) ease,
     fill var(--theme-transition-duration) ease,
     stroke var(--theme-transition-duration) ease;
+}
+
+:root {
+  --theme-transition-duration: 0.4s;
 }
