@@ -7,35 +7,35 @@
 /* -------------------- */
 :root {
   /* General Colors */
-  --color-bg:                #fefefe;      /* softer white */
-  --color-text:              #1a1a1a;      /* softer black */
-  --color-text-inverted:     #ffffff;
-  --color-text-light:        #555555;
-  --color-subheading:        #666666;
+  --color-bg:                #f2f0eb;      /* soft cream instead of white */
+  --color-text:              #2c2c34;      /* deep slate gray instead of black */
+  --color-text-inverted:     #f2f0eb;      /* matches background */
+  --color-text-light:        #6e6e78;      /* muted gray */
+  --color-subheading:        #8a888f;      /* subtle secondary text */
 
   /* Shadows & Borders */
-  --color-shadow:            rgba(0,0,0,0.1);
-  --color-border:            #2d2d2d;
-  --color-border-light:      #ccc;
+  --color-shadow:            rgba(44, 44, 52, 0.3);
+  --color-border:            #c8c5bf;
+  --color-border-light:      #e1ded8;
 
   /* Overlays */
-  --color-overlay:           rgba(0, 0, 0, 0.8);
-  --color-overlay-light:     rgba(0, 0, 0, 0.6);
+  --color-overlay:           rgba(44, 44, 52, 0.7);
+  --color-overlay-light:     rgba(44, 44, 52, 0.5);
 
   /* Tooltip & Alerts */
-  --color-tooltip:           #3cb371;      /* softer green */
-  --color-tooltip-text:      #ffffff;
-  --color-danger:            #ff4d4f;      /* modern red */
-  --color-danger-text:       #ffffff;
+  --color-tooltip:           #6fa58f;      /* soft teal */
+  --color-tooltip-text:      #f2f0eb;
+  --color-danger:            #e07a78;      /* muted coral red */
+  --color-danger-text:       #f2f0eb;
 
   /* Checkerboard */
-  --checker-color-1:         #e2e2e2;
-  --checker-color-2:         #f9f9f9;
-  --checker-color-mobile-1:  #e5e5e5;
-  --checker-color-mobile-2:  #f5f5f5;
+  --checker-color-1:         #e6e2db;
+  --checker-color-2:         #f3f0eb;
+  --checker-color-mobile-1:  #e8e4dd;
+  --checker-color-mobile-2:  #f5f3ed;
 
   /* Image adjustments */
-  --tokkigif:                brightness(0) saturate(100%);
+  --tokkigif:                brightness(1) saturate(100%);
 
   /* Transition */
   --theme-transition-duration: 0.4s;
@@ -47,34 +47,34 @@
 :root[data-theme="dark"] {
   /* General Colors */
   --color-bg:                #181818;
-  --color-text:              #f5f5f5;
+  --color-text:              #f2f2f2;
   --color-text-inverted:     #ffffff;
-  --color-text-light:        #cccccc;
+  --color-text-light:        #b3b3b3;
   --color-subheading:        #999999;
 
   /* Shadows & Borders */
-  --color-shadow:            rgba(0,0,0,0.2);
+  --color-shadow:            rgba(10, 10, 10, 1);
   --color-border:            #555555;
   --color-border-light:      #777777;
 
   /* Overlays */
   --color-overlay:           rgba(255, 255, 255, 0.85);
-  --color-overlay-light:     rgba(255, 255, 255, 0.6);
+  --color-overlay-light:     rgba(255, 255, 255, 0.5);
 
   /* Tooltip & Alerts */
-  --color-tooltip:           #3cb371;
-  --color-tooltip-text:      #f5f5f5;
-  --color-danger:            #ff4d4f;
+  --color-tooltip:           #4caf7c;
+  --color-tooltip-text:      #f2f2f2;
+  --color-danger:            #ff5f57;
   --color-danger-text:       #ffffff;
 
   /* Checkerboard */
   --checker-color-1:         #2a2a2a;
-  --checker-color-2:         #1f1f1f;
+  --checker-color-2:         #1e1e1e;
   --checker-color-mobile-1:  #2a2a2a;
-  --checker-color-mobile-2:  #1a1a1a;
+  --checker-color-mobile-2:  #1b1b1b;
 
   /* Image adjustments */
-  --tokkigif:                brightness(0) invert(1);
+  --tokkigif:                brightness(1) invert(1);
 }
 
 /* -------------------- */
