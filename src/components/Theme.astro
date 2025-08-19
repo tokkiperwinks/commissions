@@ -2,7 +2,7 @@
 <div class="toggle-wrap">
   <span class="toggle-shadow" aria-hidden="true"></span>
   <button id="theme-toggle" aria-label="Toggle Theme">
-    <svg id="bulb-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28">
+    <svg id="bulb-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="21" height="21">
       <path fill="currentColor" d="M9 21h6v-1H9v1zm3-19a7 7 0 0 0-4 12.75V18a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-3.25A7 7 0 0 0 12 2z"/>
     </svg>
   </button>
@@ -19,8 +19,8 @@ html, body {
   position: fixed;
   top: 1rem;
   right: 1rem;
-  width: 60px;
-  height: 60px;
+  width: 45px;   /* 60px → 45px (25% smaller) */
+  height: 45px;  /* 60px → 45px */
   z-index: 1000;
   opacity: 0.2;
   transition: opacity 0.3s ease;
@@ -34,13 +34,13 @@ html, body {
 .toggle-shadow {
   position: absolute;
   inset: 0;
-  border-radius: 12px;
+  border-radius: 9px; /* 12px → 9px */
   transition: transform 0.2s ease;
 }
 
 .toggle-shadow {
   background: var(--color-shadow);
-  transform: translateY(8px);
+  transform: translateY(6px); /* 8px → 6px */
   z-index: 0;
 }
 
@@ -57,14 +57,14 @@ html, body {
 }
 
 .toggle-wrap:hover #theme-toggle {
-  transform: translateY(-4px);
+  transform: translateY(-3px); /* 4px → 3px */
 }
 
 .toggle-wrap:hover .toggle-shadow {
-  transform: translateY(12px);
+  transform: translateY(9px); /* 12px → 9px */
 }
-
 </style>
+
 
 <script>
 const button = document.getElementById("theme-toggle");

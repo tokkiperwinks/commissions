@@ -81,7 +81,7 @@
           if (hit) {
 			  // play bounce sound with random pitch
 			  const s = bounceSound.cloneNode(); // clone so multiple can overlap
-			  s.volume = 0.3;
+			  s.volume = 0.2;
 			  s.playbackRate = 0.8 + Math.random() * 0.8; // random pitch between 0.8x and 1.2x
 			  s.play().catch(() => {}); 
 			}
