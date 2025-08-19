@@ -1,0 +1,158 @@
+<script is:global>
+  // Existing Discord tooltip code
+  document.addEventListener("DOMContentLoaded", () => {
+    const discordBtn = document.getElementById("discord-button");
+    const tooltip = document.getElementById("tooltip");
+
+    if (discordBtn && tooltip) {
+      discordBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        navigator.clipboard.writeText("tokkiperiwinkle")
+          .then(() => {
+            tooltip.classList.add("show");
+            setTimeout(() => tooltip.classList.remove("show"), 1200);
+          })
+          .catch(err => console.error("Clipboard error:", err));
+      });
+    }
+  });
+
+  // --- Shimeji physics code ---
+  (() => {
+    const restitution = 0.92;
+    const linearDamping = 0.999;
+    const SAMPLE_WINDOW = 120;
+
+    // 🎵 preload sound
+    const bounceSound = new Audio("spammail/pew.mp3");
+
+    function createShimeji(x = 100, y = 100) {
+      const buddy = document.createElement("div");
+      buddy.className = "shimeji";
+      document.body.appendChild(buddy);
+
+      // pick random spam image 1–13
+      const rand = Math.floor(Math.random() * 13) + 1;
+      buddy.style.background = `url('spammail/spam${rand}.png') no-repeat center / contain`;
+
+      // physics state
+      let vx = (Math.random() - 0.5) * 400;
+      let vy = (Math.random() - 0.5) * 400;
+      let dragging = false;
+      let dragOffsetX = 0, dragOffsetY = 0;
+      const samples = [];
+
+      function rect() { return buddy.getBoundingClientRect(); }
+      function clamp(v, a, b) { return Math.min(b, Math.max(a, v)); }
+      function placeBuddy(nx, ny) {
+        x = nx; y = ny;
+        buddy.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+      }
+
+      buddy.style.position = "fixed";
+      buddy.style.top = "0";
+      buddy.style.left = "0";
+      const size = getComputedStyle(document.documentElement).getPropertyValue("--buddy-size") || "300px";
+      buddy.style.width = size;
+      buddy.style.height = size;
+      buddy.style.zIndex = "2147483647";
+      buddy.style.cursor = "grab";
+
+      placeBuddy(x, y);
+
+      let lastTime = performance.now();
+      function tick(now) {
+        if (!dragging) {
+          const dt = Math.min(0.032, (now - lastTime) / 1000);
+          x += vx * dt;
+          y += vy * dt;
+
+          const b = rect();
+          const w = window.innerWidth;
+          const h = window.innerHeight;
+
+          let hit = false;
+
+          if (x <= 0) { x = 0; vx = Math.abs(vx) * restitution; hit = true; }
+          if (x + b.width >= w) { x = w - b.width; vx = -Math.abs(vx) * restitution; hit = true; }
+          if (y <= 0) { y = 0; vy = Math.abs(vy) * restitution; hit = true; }
+          if (y + b.height >= h) { y = h - b.height; vy = -Math.abs(vy) * restitution; hit = true; }
+
+          if (hit) {
+			  // play bounce sound with random pitch
+			  const s = bounceSound.cloneNode(); // clone so multiple can overlap
+			  s.volume = 0.3;
+			  s.playbackRate = 0.8 + Math.random() * 0.8; // random pitch between 0.8x and 1.2x
+			  s.play().catch(() => {}); 
+			}
+
+          vx *= linearDamping;
+          vy *= linearDamping;
+
+          placeBuddy(x, y);
+        }
+        lastTime = now;
+        requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+
+      // Dragging events
+      buddy.addEventListener("pointerdown", (e) => {
+        dragging = true; samples.length = 0;
+        buddy.setPointerCapture(e.pointerId);
+        const b = rect();
+        dragOffsetX = e.clientX - b.left;
+        dragOffsetY = e.clientY - b.top;
+        vx = vy = 0;
+        samples.push({ x: e.clientX, y: e.clientY, t: performance.now() });
+      });
+
+      window.addEventListener("pointermove", (e) => {
+        if (!dragging) return;
+        const w = window.innerWidth; const h = window.innerHeight; const b = rect();
+        const nx = clamp(e.clientX - dragOffsetX, 0, w - b.width);
+        const ny = clamp(e.clientY - dragOffsetY, 0, h - b.height);
+        placeBuddy(nx, ny);
+        const t = performance.now();
+        samples.push({ x: e.clientX, y: e.clientY, t });
+        while (samples.length && (t - samples[0].t) > SAMPLE_WINDOW) samples.shift();
+      });
+
+      window.addEventListener("pointerup", (e) => {
+        if (!dragging) return;
+        dragging = false;
+        buddy.releasePointerCapture(e.pointerId);
+        const n = samples.length;
+        if (n >= 2) {
+          const a = samples[0];
+          const b = samples[n - 1];
+          const dt = (b.t - a.t) / 1000;
+          if (dt > 0) {
+            vx = (b.x - a.x) / dt;
+            vy = (b.y - a.y) / dt;
+            const MAX = 2000;
+            vx = clamp(vx, -MAX, MAX);
+            vy = clamp(vy, -MAX, MAX);
+          }
+        }
+        samples.length = 0;
+      });
+    }
+
+    // 🔑 Spawn when "tokkigif" image is clicked
+    document.addEventListener("DOMContentLoaded", () => {
+      const tokki = document.querySelector(".tokkigif img");
+      if (tokki) {
+        tokki.addEventListener("click", () => {
+          createShimeji(window.innerWidth / 2, window.innerHeight / 2);
+        });
+      }
+    });
+  })();
+</script>
+
+<style>
+  .shimeji {
+    pointer-events: auto;
+  }
+</style>
