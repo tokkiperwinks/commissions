@@ -1,0 +1,88 @@
+---
+import "../styles/colors.css";
+---
+
+<style>
+.mini-container {
+  position: relative;
+  max-width: 1500px;
+  margin: 1.5rem auto 1rem;
+  padding: 0 1rem;
+  width: 105%;
+}
+
+.mini-heading {
+  text-align: center;
+  margin: 0.5rem 0 1rem;
+  font-size: 1.15rem;
+  color: var(--color-subheading);
+}
+
+.outline-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+  width: 100%;
+  justify-items: center;
+}
+
+.outline-square {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 2 / 1;
+  border: 2px dashed var(--color-border-light);
+  border-radius: 10px;
+  background: transparent;
+  transition: transform 0.15s ease, background-color 0.15s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem; /* scales with square size */
+}
+
+.outline-square.filled {
+  background-color: var(--color-subheading);
+  border-color: var(--color-subheading);
+}
+
+.outline-square.filled::after {
+  content: "×";
+  color: var(--color-bg);
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .outline-grid {
+    gap: 8px;
+  }
+  .outline-square {
+    border-width: 2px;
+    border-radius: 8px;
+    font-size: 1rem; /* smaller on mobile */
+  }
+}
+</style>
+
+<section class="mini-container">
+  <div class="mini-heading">Available Commission Slots</div>
+  <div class="outline-grid" id="slot-grid">
+    <div class="outline-square" aria-label="Slot 1"></div>
+    <div class="outline-square" aria-label="Slot 2"></div>
+    <div class="outline-square" aria-label="Slot 3"></div>
+    <div class="outline-square" aria-label="Slot 4"></div>
+    <div class="outline-square" aria-label="Slot 5"></div>
+  </div>
+</section>
+
+<script>
+// Number of filled slots (1 to 5)
+const filledSlots = 3;
+
+const slots = document.querySelectorAll('#slot-grid .outline-square');
+
+slots.forEach((slot, index) => {
+  if (index < filledSlots) {
+    slot.classList.add('filled');
+  }
+});
+</script>
