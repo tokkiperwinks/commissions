@@ -1,58 +1,63 @@
 <script is:global>
-  // Existing Discord tooltip code
-  document.addEventListener("DOMContentLoaded", () => {
-    const discordBtn = document.getElementById("discord-button");
-    const tooltip = document.getElementById("tooltip");
-
-    if (discordBtn && tooltip) {
-      discordBtn.addEventListener("click", (e) => {
-        e.preventDefault();
-        navigator.clipboard.writeText("tokkiperiwinkle")
-          .then(() => {
-            tooltip.classList.add("show");
-            setTimeout(() => tooltip.classList.remove("show"), 1200);
-          })
-          .catch(err => console.error("Clipboard error:", err));
-      });
-    }
-  });
-
-  // --- Shimeji physics code ---
   (() => {
     const restitution = 0.92;
     const linearDamping = 0.999;
     const SAMPLE_WINDOW = 120;
 
-    // 🎵 preload sound
     const bounceSound = new Audio("spammail/pew.mp3");
+    const boomSound = new Audio("spammail/bewm.mp3"); // 💥 explosion sound
 
-    function createShimeji(x = 100, y = 100) {
+    const shimejis = [];
+
+    // Flash + shake effect
+    function screenExplosion() {
+      const flash = document.createElement("div");
+      flash.className = "screen-flash";
+      document.body.appendChild(flash);
+
+      // play boom sound
+      boomSound.currentTime = 0;
+      boomSound.play().catch(() => {});
+
+      // remove flash after animation
+      setTimeout(() => flash.remove(), 300);
+
+      // add shake
+      document.body.classList.add("screen-shake");
+      setTimeout(() => {
+        document.body.classList.remove("screen-shake");
+      }, 500);
+    }
+
+    function createShimeji(x = 100, y = 100, forcedSprite = null) {
       const buddy = document.createElement("div");
       buddy.className = "shimeji";
       document.body.appendChild(buddy);
 
-      // pick random spam image 1–13
-      const rand = Math.floor(Math.random() * 13) + 1;
+      const rand = forcedSprite || (Math.floor(Math.random() * 13) + 1);
+      buddy.dataset.sprite = rand;
       buddy.style.background = `url('spammail/spam${rand}.png') no-repeat center / contain`;
 
-      // physics state
       let vx = (Math.random() - 0.5) * 400;
       let vy = (Math.random() - 0.5) * 400;
       let dragging = false;
       let dragOffsetX = 0, dragOffsetY = 0;
       const samples = [];
 
+      let angle = 0;
+      let spin = 0;
+
       function rect() { return buddy.getBoundingClientRect(); }
       function clamp(v, a, b) { return Math.min(b, Math.max(a, v)); }
-      function placeBuddy(nx, ny) {
+      function placeBuddy(nx, ny, rotation = angle) {
         x = nx; y = ny;
-        buddy.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+        buddy.style.transform = `translate3d(${x}px, ${y}px, 0) rotate(${rotation}deg)`;
       }
 
       buddy.style.position = "fixed";
       buddy.style.top = "0";
       buddy.style.left = "0";
-      const size = getComputedStyle(document.documentElement).getPropertyValue("--buddy-size") || "300px";
+      const size = getComputedStyle(document.documentElement).getPropertyValue("--buddy-size") || "150px";
       buddy.style.width = size;
       buddy.style.height = size;
       buddy.style.zIndex = "2147483647";
@@ -67,6 +72,10 @@
           x += vx * dt;
           y += vy * dt;
 
+          const speed = Math.sqrt(vx * vx + vy * vy);
+          spin += (speed * 0.0005 - spin) * 0.1;
+          angle += spin * dt * 180;
+
           const b = rect();
           const w = window.innerWidth;
           const h = window.innerHeight;
@@ -79,31 +88,31 @@
           if (y + b.height >= h) { y = h - b.height; vy = -Math.abs(vy) * restitution; hit = true; }
 
           if (hit) {
-			  // play bounce sound with random pitch
-			  const s = bounceSound.cloneNode(); // clone so multiple can overlap
-			  s.volume = 0.2;
-			  s.playbackRate = 0.8 + Math.random() * 0.8; // random pitch between 0.8x and 1.2x
-			  s.play().catch(() => {}); 
-			}
+            spin += (Math.random() - 0.5) * 10;
+            const s = bounceSound.cloneNode();
+            s.volume = 0.1;
+            s.playbackRate = 0.8 + Math.random() * 0.8;
+            s.play().catch(() => {});
+          }
 
           vx *= linearDamping;
           vy *= linearDamping;
+          spin *= 0.99;
 
-          placeBuddy(x, y);
+          placeBuddy(x, y, angle);
         }
         lastTime = now;
         requestAnimationFrame(tick);
       }
       requestAnimationFrame(tick);
 
-      // Dragging events
       buddy.addEventListener("pointerdown", (e) => {
         dragging = true; samples.length = 0;
         buddy.setPointerCapture(e.pointerId);
         const b = rect();
         dragOffsetX = e.clientX - b.left;
         dragOffsetY = e.clientY - b.top;
-        vx = vy = 0;
+        vx = vy = spin = 0;
         samples.push({ x: e.clientX, y: e.clientY, t: performance.now() });
       });
 
@@ -112,7 +121,7 @@
         const w = window.innerWidth; const h = window.innerHeight; const b = rect();
         const nx = clamp(e.clientX - dragOffsetX, 0, w - b.width);
         const ny = clamp(e.clientY - dragOffsetY, 0, h - b.height);
-        placeBuddy(nx, ny);
+        placeBuddy(nx, ny, angle);
         const t = performance.now();
         samples.push({ x: e.clientX, y: e.clientY, t });
         while (samples.length && (t - samples[0].t) > SAMPLE_WINDOW) samples.shift();
@@ -133,19 +142,45 @@
             const MAX = 2000;
             vx = clamp(vx, -MAX, MAX);
             vy = clamp(vy, -MAX, MAX);
+            spin = (Math.random() - 0.5) * 20;
           }
         }
         samples.length = 0;
       });
+
+      buddy.addEventListener("contextmenu", (e) => {
+        e.preventDefault();
+        const b = rect();
+        createShimeji(x + b.width * 0.2, y + b.height * 0.2, buddy.dataset.sprite);
+      });
+
+      buddy._setVelocity = (nx, ny) => {
+        vx = nx; vy = ny;
+        spin = (Math.random() - 0.5) * 30;
+      };
+
+      shimejis.push(buddy);
     }
 
-    // 🔑 Spawn when "tokkigif" image is clicked
     document.addEventListener("DOMContentLoaded", () => {
       const tokki = document.querySelector(".tokkigif img");
       if (tokki) {
         tokki.addEventListener("click", () => {
           createShimeji(window.innerWidth / 2, window.innerHeight / 2);
         });
+      }
+    });
+
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "Shift" && shimejis.length > 0) {
+        shimejis.forEach(b => {
+          const angle = Math.random() * Math.PI * 2;
+          const speed = 1500 + Math.random() * 1500;
+          const vx = Math.cos(angle) * speed;
+          const vy = Math.sin(angle) * speed;
+          b._setVelocity(vx, vy);
+        });
+        screenExplosion(); // 💥 trigger effects
       }
     });
   })();
