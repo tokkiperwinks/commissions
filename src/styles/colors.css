@@ -28,6 +28,10 @@
 
   --tokkigif:                brightness(1) saturate(100%);
   --theme-transition-duration: 0.4s;
+  --social-text-color: #2c2c34; /* light mode text/icons */
+  --social-icon-filter: brightness(0) saturate(100%) 
+    invert(13%) sepia(5%) saturate(658%) 
+    hue-rotate(202deg) brightness(95%) contrast(93%);
 }
 
 :root[data-theme="dark"] {
@@ -55,6 +59,9 @@
   --checker-color-mobile-2:  #1b1b1b;
 
   --tokkigif:                brightness(1) invert(1);
+
+  --social-text-color: var(--color-text-inverted); /* usually white */
+  --social-icon-filter: invert(0); /* white icons */
 }
 
 :root,

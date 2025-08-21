@@ -77,61 +77,74 @@ import Slots from "../components/Slots.astro";
   border-radius: 1rem;
 }
 
-/* Social buttons */
 .social-buttons {
   display: flex;
-  justify-content: center;
-  gap: 0.75rem;
-  flex-wrap: wrap;
+  flex-direction: column;   /* stack vertically */
+  align-items: center;      /* center buttons horizontally */
+  gap: 1.25rem;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
 }
 
+/* Social button */
 .social-button {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
   background: var(--color-shadow);
-  color: var(--color-text-inverted);
+  color: var(--social-text-color);
   border-radius: 9999px;
-  padding: 0.5rem 0.9rem;
-  font-size: 0.8rem;
+  padding: 0.75rem 1rem;
+  font-size: 0.9rem;
   font-weight: 500;
   cursor: pointer;
   transition: transform 0.2s ease;
   white-space: nowrap;
   text-decoration: none;
-  position: relative;
+  width: 100%;
+  max-width: 350px;
+  position: relative;   /* 👈 add this */
 }
 
 .social-button:hover {
-  transform: scale(1.05);
+  transform: scale(1.02);
 }
 
 .social-button .icon {
   width: 1.25rem;
   height: 1.25rem;
-  object-fit: contain;
   display: block;
+  filter: var(--social-icon-filter);
+}
+
+.social-text {
+  color: var(--social-text-color);
+  text-align: center;
 }
 
 .copy-tooltip {
   position: absolute;
-  top: -2.5rem;
+  bottom: 120%; /* place above button */
   left: 50%;
-  transform: translateX(-50%);
+  transform: translateX(-50%) translateY(-10px); /* slight offset */
   background: var(--color-tooltip);
   color: var(--color-tooltip-text);
-  padding: 0.4rem 0.6rem;
-  font-size: 0.7rem;
-  border-radius: 0.5rem;
+  font-size: 0.9rem;       /* bigger text */
+  font-weight: 600;
+  padding: 0.6rem 1rem;    /* bigger box */
+  border-radius: 0.75rem;  /* rounder corners */
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.25s ease, transform 0.25s ease;
   white-space: nowrap;
   z-index: 10;
 }
 
 .copy-tooltip.show {
   opacity: 1;
+  transform: translateX(-50%) translateY(-50%); /* float upward */
 }
 
 .copy-tooltip::after {
@@ -143,22 +156,6 @@ import Slots from "../components/Slots.astro";
   border-width: 12px;
   border-style: solid;
   border-color: var(--color-tooltip) transparent transparent transparent;
-}
-
-/* Mobile adjustments */
-@media (max-width: 768px) {
-  .social-buttons {
-    flex-direction: column;
-    align-items: center;
-    width: 80%;
-    transform: translateX(-10%);
-	
-  }
-  .social-button {
-    width: 100%;
-    justify-content: center;
-    text-align: center;
-  }
 }
 </style>
 
@@ -178,25 +175,32 @@ import Slots from "../components/Slots.astro";
     </p>
 
     <div class="social-buttons">
-      <!-- Twitter -->
-      <a href="https://x.com/tokkiperiwinkle" target="_blank" class="social-button oblong-button" aria-label="Twitter">
-        <img src="twitter.svg" alt="Twitter" class="icon" />
-        <span class="social-text">@tokkiperiwinkle</span>
-      </a>
+	  <!-- Twitter -->
+	  <a href="https://x.com/tokkiperiwinkle" target="_blank" class="social-button oblong-button" aria-label="Twitter">
+		<img src="twitter.svg" alt="Twitter" class="icon" />
+		<span class="social-text">@tokkiperiwinkle</span>
+	  </a>
 
-      <!-- Discord -->
-      <a href="#" id="discord-button" class="social-button oblong-button" aria-label="Discord">
-        <img src="discord.svg" alt="Discord" class="icon" />
-        <span class="social-text">tokkiperiwinkle</span>
-        <div id="tooltip" class="copy-tooltip">Copied Username!</div>
-      </a>
+	  <!-- Discord -->
+	  <a href="#" id="discord-button" class="social-button oblong-button" aria-label="Discord">
+		<img src="discord.svg" alt="Discord" class="icon" />
+		<span class="social-text">tokkiperiwinkle</span>
+		<div id="tooltip" class="copy-tooltip">Copied Username!</div>
+	  </a>
+
+	  <!-- Terms of Service -->
+		<a href="#" id="terms-button" class="social-button oblong-button" aria-label="Terms of Service">
+		  <img src="gavel.svg" alt="Terms" class="icon" />
+		  <span class="social-text">Terms of Service</span>
+		</a>
 	  <!-- <Slots /> -->
-    </div>
+	</div>
   </section>
 </div>
 
 <script is:global>
   document.addEventListener("DOMContentLoaded", () => {
+    /* === Discord copy button === */
     const discordBtn = document.getElementById("discord-button");
     const tooltip = document.getElementById("tooltip");
 
@@ -211,5 +215,35 @@ import Slots from "../components/Slots.astro";
           .catch(err => console.error("Clipboard error:", err));
       });
     }
+
+    /* === Terms of Service modal === */
+    const acceptBtn = document.getElementById("acceptBtn");
+    const modal = document.getElementById("modal");
+    const termsBtn = document.getElementById("terms-button");
+
+    if (modal && acceptBtn) {
+      // Show modal immediately on first load
+      document.body.classList.add("modal-open");
+
+      // Accept button closes modal
+      acceptBtn.addEventListener("click", () => {
+        modal.classList.add("fade-out");
+        modal.addEventListener("transitionend", () => {
+          modal.classList.add("modal-hidden");
+          modal.classList.remove("fade-out");
+          document.body.classList.remove("modal-open");
+        }, { once: true });
+      });
+    }
+
+    if (termsBtn && modal) {
+      // Terms button reopens modal
+      termsBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        modal.classList.remove("modal-hidden", "fade-out");
+        document.body.classList.add("modal-open");
+      });
+    }
   });
 </script>
+
