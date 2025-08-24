@@ -1,66 +1,458 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>My Local Blog</title>
-  <style>
-    body { font-family: Arial, sans-serif; max-width: 600px; margin: 2rem auto; }
-    textarea { width: 100%; height: 120px; margin-bottom: 1rem; }
-    button { padding: 0.5rem 1rem; margin-bottom: 1rem; }
-    .blog-post { border: 1px solid #ccc; padding: 1rem; margin-bottom: 1rem; border-radius: 8px; }
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Lite Docs</title>
+<style>
+  :root {
+    --bg: #0f1115;        /* dark mode default; toggleable */
+    --paper: #ffffff;
+    --ink: #111827;
+    --muted: #94a3b8;
+    --accent: #6366f1;
+    --accent-2: #22c55e;
+    --toolbar: #0b0d12;
+    --btn: #151823;
+    --btn-hover: #1d2230;
+    --ring: rgba(99,102,241,.35);
+  }
+  [data-theme="light"]{ --bg:#f8fafc; --toolbar:#ffffff; --btn:#f1f5f9; --btn-hover:#e5e7eb; --ink:#0f172a; }
+
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{margin:0;background:var(--bg);color:#e5e7eb;font:14px/1.4 system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial}
+  .app{display:grid;grid-template-rows:auto 1fr; height:100%}
+  .topbar{display:flex;gap:.5rem;align-items:center;padding:.5rem .75rem;background:var(--toolbar);border-bottom:1px solid #1f2937;position:sticky;top:0;z-index:10}
+  .brand{display:flex;align-items:center;gap:.5rem;font-weight:700}
+  .brand svg{width:22px;height:22px}
+  .docname{background:transparent;border:0;border-bottom:1px dashed #334155;color:#e2e8f0;padding:.25rem .35rem;min-width:12ch}
+  .docname:focus{outline:2px solid var(--ring)}
+  .spacer{flex:1}
+
+  .toolbar{display:flex;flex-wrap:wrap;gap:.35rem;align-items:center}
+  .btn, .menu{background:var(--btn);border:1px solid #273244;color:#e5e7eb;padding:.4rem .55rem;border-radius:.5rem;cursor:pointer;display:inline-flex;gap:.4rem;align-items:center}
+  .btn:hover{background:var(--btn-hover)}
+  .btn[aria-pressed="true"]{outline:2px solid var(--ring)}
+  .menu{padding:.35rem}
+  .menu select, .menu input[type="color"]{background:transparent;border:0;color:inherit}
+  .menu select:focus{outline:none}
+  .sep{width:1px;height:28px;background:#273244;margin:0 .25rem}
+
+  .main{display:grid;grid-template-columns: 260px 1fr 300px; gap:1rem; padding:1rem; height:calc(100vh - 56px);}
+  .panel{background:rgba(15,23,42,.35);border:1px solid #1f2937;border-radius:.75rem;overflow:auto}
+  .panel h3{margin:0;padding:.75rem .75rem;border-bottom:1px solid #1f2937;color:#cbd5e1;font-size:.9rem;letter-spacing:.02em}
+  .panel .pad{padding:.75rem}
+
+  /* Page canvas */
+  .page-wrap{display:flex;justify-content:center;overflow:auto;padding:1rem}
+  .page{width:816px; /* A4 at 96dpi ~ 8.5x11 simplified */
+        min-height:1056px;background:var(--paper); color:var(--ink); 
+        box-shadow:0 8px 24px rgba(0,0,0,.35); border-radius:.5rem;
+        padding:96px 88px; /* margins */
+  }
+  .page:focus{outline:3px solid var(--ring)}
+  .page[contenteditable="true"]:empty:before{content:attr(data-placeholder); color:#9ca3af}
+
+  .status{font-size:.75rem;color:var(--muted)}
+  .kbd{font:12px/1.2 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; background:#111827;border:1px solid #1f2937;border-bottom-width:3px;border-radius:.35rem; padding:.1rem .35rem}
+
+  /* Small screens: collapse side panels */
+  @media (max-width: 1100px){
+    .main{grid-template-columns: 1fr;}
+    .left, .right{display:none}
+  }
+
+  /* Dialog */
+  dialog{border:1px solid #1f2937;border-radius:.75rem;background:#0b0f18;color:#e5e7eb}
+  dialog::backdrop{background:rgba(2,6,23,.55)}
+  .dialog-body{padding:1rem;display:grid;gap:.75rem;min-width:320px}
+  .dialog-row{display:flex;gap:.5rem;align-items:center}
+  .dialog-row label{width:90px;color:#94a3b8}
+  .dialog-actions{display:flex;justify-content:flex-end;gap:.5rem}
+
+  /* Simple notification */
+  .toast{position:fixed;bottom:12px;left:12px;background:#0b0f18;border:1px solid #1f2937;border-radius:.5rem;padding:.5rem .75rem;color:#cbd5e1;opacity:0;transform:translateY(8px);transition:.25s}
+  .toast.show{opacity:1;transform:none}
+</style>
 </head>
 <body>
-  <h1>My Local Blog</h1>
-  
-  <input id="title" placeholder="Blog Title" style="width:100%; padding:0.5rem; margin-bottom:1rem;">
-  <textarea id="content" placeholder="Write your blog here..."></textarea>
-  <br>
-  <button onclick="saveBlog()">Save Blog</button>
-  
-  <h2>Saved Blogs</h2>
-  <div id="blogs"></div>
-  
-  <script>
-    function saveBlog() {
-      let title = document.getElementById("title").value.trim();
-      let content = document.getElementById("content").value.trim();
+<div class="app" id="app" data-theme="dark">
+  <div class="topbar">
+    <div class="brand" title="Lite Docs">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 3h9l5 5v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/><path d="M14 3v6h6"/></svg>
+      <span>Lite Docs</span>
+    </div>
 
-      if (!title || !content) return alert("Please enter both a title and content!");
+    <input id="docname" class="docname" value="Untitled document" />
 
-      let blogs = JSON.parse(localStorage.getItem("blogs")) || [];
-      blogs.push({ title, content, date: new Date().toLocaleString() });
-      localStorage.setItem("blogs", JSON.stringify(blogs));
+    <div class="spacer"></div>
 
-      document.getElementById("title").value = "";
-      document.getElementById("content").value = "";
+    <div class="toolbar" role="toolbar" aria-label="Editor toolbar">
+      <button class="btn" id="newDoc" title="New (Ctrl+Shift+N)">New</button>
+      <button class="btn" id="saveDoc" title="Save (Ctrl+S)">Save</button>
+      <button class="btn" id="exportHTML" title="Export HTML">Export</button>
+      <button class="btn" id="printDoc" title="Print">Print</button>
+      <button class="btn" id="themeToggle" title="Toggle theme">Theme</button>
+      <span class="sep" aria-hidden="true"></span>
 
-      loadBlogs();
-    }
+      <div class="menu" title="Heading">
+        <select id="blockFormat">
+          <option value="p">Normal</option>
+          <option value="h1">Heading 1</option>
+          <option value="h2">Heading 2</option>
+          <option value="h3">Heading 3</option>
+          <option value="blockquote">Quote</option>
+        </select>
+      </div>
+      <div class="menu" title="Font size">
+        <select id="fontSize">
+          <option value="3">Size</option>
+          <option value="1">Small</option>
+          <option value="3">Normal</option>
+          <option value="5">Large</option>
+          <option value="6">X-Large</option>
+        </select>
+      </div>
+      <button class="btn" data-cmd="bold" title="Bold (Ctrl+B)"><b>B</b></button>
+      <button class="btn" data-cmd="italic" title="Italic (Ctrl+I)"><i>I</i></button>
+      <button class="btn" data-cmd="underline" title="Underline (Ctrl+U)"><u>U</u></button>
+      <button class="btn" data-cmd="strikeThrough" title="Strikethrough">S</button>
+      <div class="menu" title="Text color"><input type="color" id="foreColor" /></div>
+      <div class="menu" title="Highlight color"><input type="color" id="backColor" /></div>
+      <span class="sep" aria-hidden="true"></span>
+      <button class="btn" data-cmd="insertUnorderedList" title="Bulleted list">• List</button>
+      <button class="btn" data-cmd="insertOrderedList" title="Numbered list">1. List</button>
+      <button class="btn" data-cmd="outdent" title="Outdent">Out</button>
+      <button class="btn" data-cmd="indent" title="Indent">In</button>
+      <span class="sep" aria-hidden="true"></span>
+      <button class="btn" data-cmd="justifyLeft" title="Align left">⟸</button>
+      <button class="btn" data-cmd="justifyCenter" title="Align center">╱╲</button>
+      <button class="btn" data-cmd="justifyRight" title="Align right">⟹</button>
+      <button class="btn" data-cmd="justifyFull" title="Justify">≋</button>
+      <span class="sep" aria-hidden="true"></span>
+      <button class="btn" id="undo" title="Undo (Ctrl+Z)">Undo</button>
+      <button class="btn" id="redo" title="Redo (Ctrl+Y)">Redo</button>
+      <button class="btn" id="findReplace" title="Find & Replace (Ctrl+F)">Find</button>
+      <button class="btn" id="insertLink" title="Insert link">Link</button>
+      <button class="btn" id="insertImage" title="Insert image">Image</button>
+      <input type="file" id="imagePicker" accept="image/*" hidden>
+    </div>
+  </div>
 
-    function loadBlogs() {
-      let blogs = JSON.parse(localStorage.getItem("blogs")) || [];
-      let blogContainer = document.getElementById("blogs");
-      blogContainer.innerHTML = "";
-      blogs.forEach((b, i) => {
-        blogContainer.innerHTML += `
-          <div class="blog-post">
-            <h3>${b.title}</h3>
-            <small>${b.date}</small>
-            <p>${b.content}</p>
-            <button onclick="deleteBlog(${i})">Delete</button>
-          </div>`;
-      });
-    }
+  <div class="main">
+    <aside class="panel left">
+      <h3>Documents</h3>
+      <div class="pad">
+        <div class="status">Saved locally in your browser.</div>
+        <ul id="docList" style="list-style:none; padding-left:0; margin:.5rem 0; display:grid; gap:.35rem"></ul>
+        <button class="btn" id="deleteDoc">Delete Selected</button>
+      </div>
+    </aside>
 
-    function deleteBlog(index) {
-      let blogs = JSON.parse(localStorage.getItem("blogs")) || [];
-      blogs.splice(index, 1);
-      localStorage.setItem("blogs", JSON.stringify(blogs));
-      loadBlogs();
-    }
+    <section class="page-wrap">
+      <article id="page" class="page" contenteditable="true" spellcheck="true" data-placeholder="Start typing…"></article>
+    </section>
 
-    loadBlogs();
-  </script>
+    <aside class="panel right">
+      <h3>Details</h3>
+      <div class="pad">
+        <div><strong>Status:</strong> <span id="saveStatus" class="status">Idle</span></div>
+        <div style="margin-top:.5rem"><strong>Word count:</strong> <span id="wordCount">0</span></div>
+        <hr style="border-color:#1f2937;margin:.75rem 0">
+        <label style="display:flex;align-items:center;gap:.5rem">Page margin <input id="marginRange" type="range" min="48" max="144" value="96"></label>
+        <label style="display:flex;align-items:center;gap:.5rem;margin-top:.5rem">Line height <input id="lhRange" type="range" min="12" max="28" value="20"></label>
+        <label style="display:flex;align-items:center;gap:.5rem;margin-top:.5rem">Zoom <input id="zoomRange" type="range" min="75" max="175" value="100"></label>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<!-- Find/Replace dialog -->
+<dialog id="findDialog">
+  <form method="dialog" class="dialog-body">
+    <h3 style="margin:0">Find & Replace</h3>
+    <div class="dialog-row"><label>Find</label><input id="findText" type="text" placeholder="text" /></div>
+    <div class="dialog-row"><label>Replace</label><input id="replaceText" type="text" placeholder="replacement" /></div>
+    <div class="dialog-actions">
+      <button class="btn" value="close">Close</button>
+      <button class="btn" id="btnReplaceAll" value="replace">Replace all</button>
+      <button class="btn" id="btnFindNext" value="find">Find next</button>
+    </div>
+  </form>
+</dialog>
+
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+<script>
+// --- Tiny helper utils ---
+const $ = (sel, root=document) => root.querySelector(sel);
+const $$ = (sel, root=document) => [...root.querySelectorAll(sel)];
+const showToast = (msg) => { const t = $('#toast'); t.textContent = msg; t.classList.add('show'); setTimeout(()=> t.classList.remove('show'), 1500); };
+
+// --- Editor wiring (uses legacy execCommand for brevity & wide support) ---
+const page = $('#page');
+const docname = $('#docname');
+
+// Keep selection focused into the page when clicking toolbar
+$$('.btn[data-cmd]').forEach(btn=>{
+  btn.addEventListener('click', () => {
+    page.focus();
+    document.execCommand(btn.dataset.cmd, false, null);
+    updateWordCount();
+    scheduleAutosave();
+  });
+});
+
+$('#fontSize').addEventListener('change', e=>{ page.focus(); document.execCommand('fontSize', false, e.target.value); scheduleAutosave(); });
+$('#blockFormat').addEventListener('change', e=>{ page.focus(); document.execCommand('formatBlock', false, e.target.value); scheduleAutosave(); });
+$('#foreColor').addEventListener('input', e=>{ page.focus(); document.execCommand('foreColor', false, e.target.value); scheduleAutosave(); });
+$('#backColor').addEventListener('input', e=>{ page.focus(); document.execCommand('hiliteColor', false, e.target.value); scheduleAutosave(); });
+
+$('#undo').onclick = ()=> document.execCommand('undo');
+$('#redo').onclick = ()=> document.execCommand('redo');
+
+// Insert link
+$('#insertLink').onclick = () => {
+  const url = prompt('Enter URL');
+  if(!url) return;
+  document.execCommand('createLink', false, url);
+};
+
+// Insert image via file input
+const imagePicker = $('#imagePicker');
+$('#insertImage').onclick = () => imagePicker.click();
+imagePicker.addEventListener('change', async (e) => {
+  const file = e.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = () => {
+    page.focus();
+    document.execCommand('insertImage', false, reader.result);
+    scheduleAutosave();
+  };
+  reader.readAsDataURL(file);
+  imagePicker.value = '';
+});
+
+// --- Word count ---
+const wordCountEl = $('#wordCount');
+const updateWordCount = () => {
+  const text = page.innerText || '';
+  const words = text.trim().split(/\s+/).filter(Boolean);
+  wordCountEl.textContent = words.length;
+};
+page.addEventListener('input', ()=>{ updateWordCount(); scheduleAutosave(); });
+
+// --- Layout controls ---
+$('#marginRange').addEventListener('input', e=>{
+  const v = e.target.value + 'px';
+  page.style.padding = v + ' 88px';
+});
+$('#lhRange').addEventListener('input', e=>{ page.style.lineHeight = (e.target.value/10).toString(); });
+$('#zoomRange').addEventListener('input', e=>{ page.style.transform = `scale(${e.target.value/100})`; page.style.transformOrigin='top center'; });
+
+// --- Theme ---
+$('#themeToggle').onclick = ()=>{
+  const app = $('#app');
+  app.dataset.theme = app.dataset.theme === 'dark' ? 'light' : 'dark';
+};
+
+// --- Save / Load (localStorage) ---
+const LS_KEY = 'litedocs.documents';
+let state = { currentId: null, docs: {} };
+
+function loadState(){
+  try { state = JSON.parse(localStorage.getItem(LS_KEY)) || { currentId:null, docs:{} }; }
+  catch{ state = { currentId:null, docs:{} }; }
+}
+function persist(){ localStorage.setItem(LS_KEY, JSON.stringify(state)); renderDocList(); }
+
+function createNew(){
+  const id = 'doc_' + Date.now();
+  state.docs[id] = { name: 'Untitled document', html: '', updated: Date.now() };
+  state.currentId = id;
+  applyDoc();
+  persist();
+}
+
+function applyDoc(){
+  const d = state.docs[state.currentId];
+  if(!d) return;
+  docname.value = d.name;
+  page.innerHTML = d.html || '';
+  updateWordCount();
+  $('#saveStatus').textContent = 'Loaded';
+}
+
+function renderDocList(){
+  const list = $('#docList');
+  list.innerHTML = '';
+  const entries = Object.entries(state.docs).sort((a,b)=> b[1].updated - a[1].updated);
+  for(const [id, d] of entries){
+    const li = document.createElement('li');
+    li.innerHTML = `<label style="display:flex;gap:.5rem;align-items:center"><input type="radio" name="doc" value="${id}" ${id===state.currentId?'checked':''}> <span>${d.name}</span> <span class="status" style="margin-left:auto">${new Date(d.updated).toLocaleString()}</span></label>`;
+    list.appendChild(li);
+  }
+  list.onchange = (e)=>{ state.currentId = e.target.value; applyDoc(); persist(); };
+}
+
+let autosaveTimer = null;
+function scheduleAutosave(){
+  clearTimeout(autosaveTimer);
+  $('#saveStatus').textContent = 'Editing…';
+  autosaveTimer = setTimeout(saveCurrent, 600);
+}
+
+function saveCurrent(){
+  const id = state.currentId || (createNew(), state.currentId);
+  const doc = state.docs[id];
+  doc.name = docname.value || 'Untitled document';
+  doc.html = page.innerHTML;
+  doc.updated = Date.now();
+  persist();
+  $('#saveStatus').textContent = 'Saved';
+  showToast('Saved');
+}
+
+$('#saveDoc').onclick = saveCurrent;
+$('#newDoc').onclick = ()=>{ createNew(); showToast('New document'); };
+$('#deleteDoc').onclick = ()=>{
+  if(!state.currentId) return;
+  if(confirm('Delete this document?')){
+    delete state.docs[state.currentId];
+    state.currentId = Object.keys(state.docs)[0] || null;
+    applyDoc();
+    persist();
+  }
+};
+
+docname.addEventListener('input', scheduleAutosave);
+
+// --- Export / Print ---
+$('#exportHTML').onclick = ()=>{
+  const name = (docname.value || 'document').replace(/[^\w\- ]+/g,'').trim() || 'document';
+  const blob = new Blob([
+    `<!doctype html><html><head><meta charset='utf-8'><title>${name}</title></head><body>${page.innerHTML}</body></html>`
+  ], {type:'text/html'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = name + '.html'; a.click();
+  URL.revokeObjectURL(url);
+};
+
+$('#printDoc').onclick = ()=>{
+  const w = window.open('', '_blank');
+  const name = docname.value || 'document';
+  w.document.write(`<!doctype html><title>${name}</title><style>body{font:14px/1.6 system-ui, -apple-system, Segoe UI, Roboto; color:#111827; padding:48px} img{max-width:100%}</style>${page.innerHTML}`);
+  w.document.close();
+  w.focus();
+  w.print();
+};
+
+// --- Find & Replace ---
+const findDialog = $('#findDialog');
+const findText = $('#findText');
+const replaceText = $('#replaceText');
+
+function openFind(){ findDialog.showModal(); setTimeout(()=> findText.focus(), 50); }
+$('#findReplace').onclick = openFind;
+
+$('#btnFindNext').addEventListener('click', (e)=>{
+  e.preventDefault();
+  const q = findText.value; if(!q) return;
+  const r = new RegExp(q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i');
+  // Naive search: use window.find where supported
+  if(!window.find || !window.find(q, false, false, true, false, true, false)){
+    showToast('No more matches');
+  }
+});
+
+$('#btnReplaceAll').addEventListener('click', (e)=>{
+  e.preventDefault();
+  const q = findText.value; const rep = replaceText.value;
+  if(!q) return;
+  const safe = q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const rx = new RegExp(safe, 'gi');
+  page.innerHTML = page.innerHTML.replace(rx, rep);
+  updateWordCount();
+  scheduleAutosave();
+});
+
+// --- Keyboard shortcuts ---
+window.addEventListener('keydown', (e)=>{
+  if(e.target.closest('input, select, textarea')) return;
+  if((e.ctrlKey||e.metaKey) && e.key.toLowerCase()==='s'){ e.preventDefault(); saveCurrent(); }
+  if((e.ctrlKey||e.metaKey) && e.shiftKey && e.key.toLowerCase()==='n'){ e.preventDefault(); createNew(); }
+  if((e.ctrlKey||e.metaKey) && e.key.toLowerCase()==='f'){ e.preventDefault(); openFind(); }
+});
+
+// --- Boot ---
+loadState();
+if(!state.currentId) createNew(); else { applyDoc(); renderDocList(); }
+renderDocList();
+updateWordCount();
+
+// Make newly pasted content inherit editor styles
+page.addEventListener('paste', (e)=>{
+  e.preventDefault();
+  const text = (e.clipboardData || window.clipboardData).getData('text/plain');
+  document.execCommand('insertText', false, text);
+});
+
+// --- Markdown Export / Copy ---
+function htmlToMarkdown(html){
+// Very naive HTML → Markdown conversion
+return html
+.replace(/<h1>(.*?)<\/h1>/gi, '# $1\n\n')
+.replace(/<h2>(.*?)<\/h2>/gi, '## $1\n\n')
+.replace(/<h3>(.*?)<\/h3>/gi, '### $1\n\n')
+.replace(/<b>(.*?)<\/b>/gi, '**$1**')
+.replace(/<strong>(.*?)<\/strong>/gi, '**$1**')
+.replace(/<i>(.*?)<\/i>/gi, '*$1*')
+.replace(/<em>(.*?)<\/em>/gi, '*$1*')
+.replace(/<u>(.*?)<\/u>/gi, '_$1_')
+.replace(/<strike>(.*?)<\/strike>/gi, '~~$1~~')
+.replace(/<s>(.*?)<\/s>/gi, '~~$1~~')
+.replace(/<ul>([\s\S]*?)<\/ul>/gi, (m, g)=> g.replace(/<li>(.*?)<\/li>/gi, '- $1\n'))
+.replace(/<ol>([\s\S]*?)<\/ol>/gi, (m,g)=> g.replace(/<li>(.*?)<\/li>/gi, (m2,li,i)=> `${i+1}. ${li}\n`))
+.replace(/<a [^>]*href="(.*?)"[^>]*>(.*?)<\/a>/gi, '[$2]($1)')
+.replace(/<img [^>]*src="(.*?)"[^>]*>/gi, '![]($1)')
+.replace(/<blockquote>([\s\S]*?)<\/blockquote>/gi, (m,g)=> g.split('\n').map(l=>'> '+l).join('\n'))
+.replace(/<br\s*\/?>(\s*)/gi, "\n")
+.replace(/<div>([\s\S]*?)<\/div>/gi, '$1\n')
+.replace(/<p>([\s\S]*?)<\/p>/gi, '$1\n\n')
+.replace(/<[^>]+>/g, '')
+.trim();
+}
+
+
+// Add buttons for Copy Markdown and Copy HTML
+const toolbar = document.querySelector('.toolbar');
+const copyMD = document.createElement('button');
+copyMD.className = 'btn';
+copyMD.textContent = 'Copy MD';
+copyMD.title = 'Copy as Markdown';
+copyMD.onclick = ()=>{
+const md = htmlToMarkdown(page.innerHTML);
+navigator.clipboard.writeText(md).then(()=> showToast('Markdown copied'));
+};
+
+
+const copyHTML = document.createElement('button');
+copyHTML.className = 'btn';
+copyHTML.textContent = 'Copy HTML';
+copyHTML.title = 'Copy as HTML';
+copyHTML.onclick = ()=>{
+navigator.clipboard.writeText(page.innerHTML).then(()=> showToast('HTML copied'));
+};
+
+
+// Insert near export/print buttons
+const exportBtn = document.getElementById('exportHTML');
+exportBtn.insertAdjacentElement('afterend', copyMD);
+copyMD.insertAdjacentElement('afterend', copyHTML);
+
+</script>
 </body>
 </html>
