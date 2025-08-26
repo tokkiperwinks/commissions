@@ -51,10 +51,30 @@ import "../styles/colors.css";
 }
 
 .rules-section ul {
-  padding-left: 1rem;
-  list-style: disc;
-  line-height: 1.5;
-  margin-bottom: 0.5rem;
+  padding-left: 1.25rem;
+  list-style: none;
+  line-height: 1.6;
+  color: var(--color-text);
+}
+
+.rules-section ul li {
+  margin-bottom: 0.4rem;
+  position: relative;
+  padding-left: 1.2rem;
+}
+
+.rules-section ul li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--color-accent);
+  font-weight: bold;
+}
+
+.rules-section ul ul li::before {
+  content: "–"; /* dash for nested lists */
+  color: var(--color-text-light);
 }
 
 .rules-note {
@@ -95,6 +115,7 @@ import "../styles/colors.css";
           <ul class="list-disc list-inside ml-4">
             <li>Ornate outfits</li>
             <li>More than two limbs</li>
+            <li>More than one person</li>
           </ul>
         </li>
         <li>
