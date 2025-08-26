@@ -1,112 +1,22 @@
 ---
 import "../styles/global.css";
-import TermsModal from "../components/TermsModal.astro";
-import Gallery from "../components/Gallery.astro";
-import YCH from "../components/YCH Loops.astro";
-import Intro from "../components/Intro.astro";
-import ArtRequest from "../components/ArtRequest.astro";
-import Footer from '../components/Footer.astro';
-import ThemeToggle from "../components/Theme.astro";
-import Buddy from "../buddies/buddy.astro";
+import MainPage from "../components/main.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
 ---
 
-<html lang="en">
-  <head>
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <meta charset="utf-8" />
-    <title>tokki commissions :o)</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" href="favicon.svg" />
+<head>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta charset="utf-8" />
+  <title>tokki commissions :o)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="favicon.svg" />
+</head>
 
-    <style>
-      main {
-        max-width: 1600px;
-        margin: 0 auto;
-        padding: 3rem 2rem;
-        width: 100%;
-      }
-
-      .flex {
-        display: flex;
-        width: 100%;
-        gap: 2vw; /* horizontal gap scales with viewport */
-      }
-	  
-	  .stuff-wrapper {
-		
-	  }
-	  
-      .split-side {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        gap: 2rem; /* vertical spacing between elements */
-      }
-
-      .left-side {
-        align-items: flex-start;
-        justify-content: flex-start;
-      }
-
-      .right-side {
-        align-items: flex-end;
-        justify-content: flex-start;
-      }
-
-      @media (max-width: 768px) {
-        html {
-          font-size: 13px;
-        }
-
-        main {
-          padding: 2rem 1rem;
-        }
-
-        .flex {
-          flex-direction: column;
-          gap: 2rem; /* vertical spacing on stacked layout */
-        }
-
-        .split-side {
-          width: 100% !important;
-          align-items: center !important;
-        }
-
-        img {
-          max-width: 100%;
-          height: auto;
-        }
-
-        * {
-          max-width: 100%;
-          box-sizing: border-box;
-        }
-      }
-    </style>
-  </head>
-
-  <body class="bg-checkerboard min-h-screen flex flex-col">
-	<TermsModal />
-	<ThemeToggle />
-	<!-- <Buddy />  -->
-    <main>
-	<section class="stuff-wrapper">
-      <div class="flex w-full min-h-screen">
-        <!-- Left side -->
-        <div class="split-side left-side">
-          <Intro />
-          <ArtRequest />
-        </div>
-
-        <!-- Right side -->
-        <div class="split-side right-side">
-
-          <Gallery />
-          <YCH />
-        </div>
-	  </div>
-    </main>
-
-    <Footer />
-  </body>
-</html>
+<body class="bg-checkerboard min-h-screen flex flex-col">
+  <main>
+  <Header />
+    <MainPage />
+  </main>
+  <Footer />
+</body>

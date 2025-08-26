@@ -1,11 +1,25 @@
 ---
-// No props needed unless you want to add text/content later
+import "../styles/global.css";
 ---
 
-<footer class="footer-space"></footer>
+<footer class="site-footer">
+  <p>@tokkiperiwinkle :p</p>
+</footer>
 
 <style>
-  .footer-space {
-    height: 5vh;
+  .site-footer {
+    background-color: var(--color-bg);
+    color: white;
+    text-align: center;
+    padding: 1.5rem 1rem;
+    margin-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .site-footer p {
+    margin: 0;
+    font-size: 0.9rem;
+	color: var(--color-text);
   }
 </style>
+
