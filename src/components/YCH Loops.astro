@@ -221,21 +221,16 @@ body {
 		ANIMATED LOOPS COMING SOON!!
 	  </h1>
 	  <p style="text-align: center; margin-top: 0.5vh; margin-bottom: 2vh; font-size: 1.2rem; color: var(--color-subheading);">
-		prices not final but it may cost up to $100+ (Semi-Flat Colors Only)
+		price range might be aroun $150-$300 (Semi-Flat Colors Only)<br>(price depend on how much movement you want it to have)
 	  </p>
 
-	  <hr class="separator" />
-
 	  <div class="gallery">
-		<div class="square-wrapper"><div class="shadow"></div><div class="square"><img src="gallery/nuthin.png" alt="1" /></div></div>
-		<div class="square-wrapper"><div class="shadow"></div><div class="square"><img src="gallery/nuthin.png" alt="1" /></div></div>
-		<div class="square-wrapper"><div class="shadow"></div><div class="square"><img src="gallery/nuthin.png" alt="1" /></div></div>
-		<div class="square-wrapper"><div class="shadow"></div><div class="square"><img src="gallery/nuthin.png" alt="1" /></div></div>
-		<div class="square-wrapper"><div class="shadow"></div><div class="square"><img src="gallery/nuthin.png" alt="1" /></div></div>
-		<div class="square-wrapper"><div class="shadow"></div><div class="square"><img src="gallery/nuthin.png" alt="1" /></div></div>
+		<div class="square-wrapper" data-nsfw="true"><div class="shadow"></div><div class="square"><img src="animations/bassie.gif" alt="1" /></div></div>
+		<div class="square-wrapper" data-nsfw="true"><div class="shadow"></div><div class="square"><img src="animations/comsoandprout.webp" alt="2" /></div></div>
+		<div class="square-wrapper" data-nsfw="true"><div class="shadow"></div><div class="square"><img src="animations/corala.gif" alt="3" /></div></div>
+		<div class="square-wrapper" data-nsfw="true"><div class="shadow"></div><div class="square"><img src="animations/goobxbox10.gif" alt="4" /></div></div>
+		<div class="square-wrapper" data-nsfw="true"><div class="shadow"></div><div class="square"><img src="animations/tishafinal.gif" alt="5" /></div></div>
 	  </div>
-	  
-	  <hr class="separator" />
 	  
 </div>
 
@@ -246,19 +241,39 @@ body {
 <script>
 const modal = document.getElementById('image-modal');
 const modalImg = document.getElementById('modal-img');
-const imageWrappers = document.querySelectorAll('.square-wrapper img');
+const images = document.querySelectorAll('.square-wrapper img');
 
-imageWrappers.forEach(img => {
-  img.addEventListener('click', () => {
-    modalImg.src = img.src;
-    modal.classList.add('active');
+// Freeze gifs in gallery
+images.forEach(img => {
+  const src = img.src;
+  img.setAttribute("data-gif", src); // store original gif/webp path
+
+  if (src.endsWith(".gif")) {
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d");
+    const still = new Image();
+    still.src = src;
+
+    still.onload = () => {
+      canvas.width = still.width;
+      canvas.height = still.height;
+      ctx.drawImage(still, 0, 0, still.width, still.height);
+      img.src = canvas.toDataURL("image/png"); // replace with frozen first frame
+    };
+  }
+
+  // Open modal with original gif/webp
+  img.addEventListener("click", () => {
+    modalImg.src = img.dataset.gif || img.src;
+    modal.classList.add("active");
   });
 });
 
-modal.addEventListener('click', () => {
-  modal.classList.remove('active');
+// Close modal
+modal.addEventListener("click", () => {
+  modal.classList.remove("active");
   setTimeout(() => {
-    modalImg.src = '';
+    modalImg.src = "";
   }, 300);
 });
 </script>
