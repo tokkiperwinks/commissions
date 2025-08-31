@@ -14,7 +14,6 @@ body {
   padding: 0 16px 5vh;
   font-family: 'Fredoka', sans-serif;
   color: var(--color-text);
-  
 }
 
 .gallery-wrapper {
@@ -26,15 +25,17 @@ body {
   transform: translateX(-20%);
 }
 
-	@media (max-width: 768px) {
-		.gallery-wrapper {
-		transform: translateX(-9px);
-		}
-	}
+@media (max-width: 768px) {
+  .gallery-wrapper {
+    transform: translateX(-9px);
+    width: 95%;
+    padding: 0.75rem;
+  }
+}
 
 .gallery-container {
   width: 100%;
-  max-width: 100%; /* full width of the screen */
+  max-width: 100%;
   padding: 1rem;
   background: var(--color-bg);
   border-radius: 1rem;
@@ -44,36 +45,29 @@ body {
 
 .gallery {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* bigger min width */
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 16px;
   width: 100%;
 }
 
-
 .gallery-shadow {
   position: absolute;
-  top: -8px; /* extend shadow above */
-  left: -1px; /* extend shadow left */
-  width: calc(100% + 1px); /* full width with shadow on sides */
-  height: calc(100% + 18px); /* full height with shadow top and bottom */
+  top: -8px;
+  left: -1px;
+  width: calc(100% + 1px);
+  height: calc(100% + 18px);
   background: var(--color-shadow);
   border-radius: 1rem;
   z-index: 0;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2); /* outline all sides */
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
 }
 
 @media (max-width: 768px) {
-  .gallery-wrapper {
-    width: 95%;
-    padding: 0.75rem;
-  }
-
   .gallery {
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); /* better on mobile */
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
     gap: 8px;
   }
 }
-
 
 .square-wrapper {
   position: relative;
@@ -215,51 +209,63 @@ body {
 </style>
 
 <div class="gallery-wrapper">
-	<div class="gallery-shadow"></div>
-	<section class="gallery-container">
-	  <h1 style="text-align: center; margin-top: 1vh; font-size: 1.75rem;">
-		Bust-Up Examples
-	  </h1>
-	  <p style="text-align: center; margin-top: 0.5vh; margin-bottom: 2vh; font-size: 1.2rem; color: var(--color-subheading);">
-		Roughly 2000px resolution<br>Flat Colors : $20 || Full Detail : $25
-	  </p>
+  <div class="gallery-shadow"></div>
+  <section class="gallery-container">
+    
+    <!-- Bust-Up -->
+    <h1 style="text-align: center; margin-top: 1vh; font-size: 1.75rem;">Bust-Up Examples</h1>
+    <p style="text-align: center; margin: 0.5vh 0 2vh; font-size: 1.2rem; color: var(--color-subheading);">
+      Roughly 2000px resolution<br>Flat Colors : $20 || Full Detail : $25
+    </p>
+    <div class="gallery">
+      <div class="square-wrapper"><div class="shadow"></div><div class="square"><img src="gallery/1.png" /></div></div>
+      <div class="square-wrapper"><div class="shadow"></div><div class="square"><img src="gallery/wetpupp.png" /></div></div>
+      <div class="square-wrapper"><div class="shadow"></div><div class="square"><img src="gallery/aggie bust.png" /></div></div>
+    </div>
 
-	  <div class="gallery">
-		<div class="square-wrapper"><div class="shadow"></div><div class="square"><img src="gallery/1.png" alt="1" /></div></div>
-		<div class="square-wrapper"><div class="shadow"></div><div class="square"><img src="gallery/wetpupp.png" alt="1" /></div></div>
-		<div class="square-wrapper"><div class="shadow"></div><div class="square"><img src="gallery/aggie bust.png" alt="1" /></div></div>
-	  </div>
+    <hr class="separator" />
 
-	  <hr class="separator" />
+    <!-- Half-Body -->
+    <h1 style="text-align: center; margin-top: 1vh; font-size: 1.75rem;">Half Body / Thigh-Up Examples</h1>
+    <p style="text-align: center; margin: 0.5vh 0 2vh; font-size: 1.2rem; color: var(--color-subheading);">
+      Roughly 2000px - 3000px resolution<br>Flat Colors : $40 || Full Detail : $45
+    </p>
+    <div class="gallery">
+      <div class="square-wrapper" data-nsfw="true"><div class="shadow"></div><div class="square"><img src="gallery/10.png" /></div></div>
+      <div class="square-wrapper" data-nsfw="true"><div class="shadow"></div><div class="square"><img src="gallery/11.png" /></div></div>
+      <div class="square-wrapper"><div class="shadow"></div><div class="square"><img src="gallery/big or smal.png" /></div></div>
+    </div>
 
-	  <h1 style="text-align: center; margin-top: 1vh; font-size: 1.75rem;">
-		Half Body / Thigh-Up Examples
-	  </h1>
-	  <p style="text-align: center; margin-top: 0.5vh; margin-bottom: 2vh; font-size: 1.2rem; color: var(--color-subheading);">
-		Roughly 2000px - 3000px resolution<br>Flat Colors : $40 || Full Detail : $45
-	  </p>
+    <hr class="separator" />
 
-	  <div class="gallery">
-		<div class="square-wrapper" data-nsfw="true"><div class="shadow"></div><div class="square"><img src="gallery/10.png" alt="10" /></div></div>
-		<div class="square-wrapper" data-nsfw="true"><div class="shadow"></div><div class="square"><img src="gallery/11.png" alt="11" /></div></div>
-		<div class="square-wrapper"><div class="shadow"></div><div class="square"><img src="gallery/big or smal.png" alt="big or small" /></div></div>
-	  </div>
+    <!-- Full-Body -->
+    <h1 style="text-align: center; margin-top: 1vh; font-size: 1.75rem;">Full Body Examples</h1>
+    <p style="text-align: center; margin: 0.5vh 0 2vh; font-size: 1.2rem; color: var(--color-subheading);">
+      Roughly 2000px - 3000px resolution<br>Flat Colors : $55 || Full Detail : $60
+    </p>
+    <div class="gallery">
+      <div class="square-wrapper"><div class="shadow"></div><div class="square"><img src="gallery/12.png" /></div></div>
+      <div class="square-wrapper" data-nsfw="true"><div class="shadow"></div><div class="square"><img src="gallery/rainworm.png" /></div></div>
+      <div class="square-wrapper"><div class="shadow"></div><div class="square"><img src="gallery/dress.png" /></div></div>
+      <div class="square-wrapper" data-nsfw="true"><div class="shadow"></div><div class="square"><img src="gallery/uhf.png" /></div></div>
+    </div>
 
-	  <hr class="separator" />
+    <hr class="separator" />
 
-	  <h1 style="text-align: center; margin-top: 1vh; font-size: 1.75rem;">
-		Full Body Examples
-	  </h1>
-	  <p style="text-align: center; margin-top: 0.5vh; margin-bottom: 2vh; font-size: 1.2rem; color: var(--color-subheading);">
-		Roughly 2000px - 3000px resolution<br>Flat Colors : $55 || Full Detail : $60
-	  </p>
+    <!-- Animated Loops -->
+    <h1 style="text-align: center; margin-top: 1vh; font-size: 1.75rem;">Animated Loop Examples</h1>
+    <p style="text-align: center; margin: 0.5vh 0 2vh; font-size: 1.2rem; color: var(--color-subheading);">
+      Price range: $150–$300 (Semi-Flat Colors only)<br>(Final price depends on your request. feel free to ask me!)
+    </p>
+    <div class="gallery">
+      <div class="square-wrapper" data-nsfw="true"><div class="shadow"></div><div class="square"><img src="animations/bassie.gif" /></div></div>
+      <div class="square-wrapper" data-nsfw="true"><div class="shadow"></div><div class="square"><img src="animations/comsoandprout.webp" /></div></div>
+      <div class="square-wrapper" data-nsfw="true"><div class="shadow"></div><div class="square"><img src="animations/corala.gif" /></div></div>
+      <div class="square-wrapper" data-nsfw="true"><div class="shadow"></div><div class="square"><img src="animations/goobxbox10.gif" /></div></div>
+      <div class="square-wrapper" data-nsfw="true"><div class="shadow"></div><div class="square"><img src="animations/tishafinal.gif" /></div></div>
+    </div>
 
-	  <div class="gallery">
-		<div class="square-wrapper"><div class="shadow"></div><div class="square"><img src="gallery/12.png" alt="12" /></div></div>
-		<div class="square-wrapper" data-nsfw="true"><div class="shadow"></div><div class="square"><img src="gallery/rainworm.png" alt="rainworm" /></div></div>
-		<div class="square-wrapper"><div class="shadow"></div><div class="square"><img src="gallery/dress.png" alt="dress" /></div></div>
-		<div class="square-wrapper" data-nsfw="true"><div class="shadow"></div><div class="square"><img src="gallery/uhf.png" alt="dress" /></div></div>
-	  </div>
+  </section>
 </div>
 
 <div class="modal" id="image-modal">
@@ -269,19 +275,36 @@ body {
 <script>
 const modal = document.getElementById('image-modal');
 const modalImg = document.getElementById('modal-img');
-const imageWrappers = document.querySelectorAll('.square-wrapper img');
+const images = document.querySelectorAll('.square-wrapper img');
 
-imageWrappers.forEach(img => {
-  img.addEventListener('click', () => {
-    modalImg.src = img.src;
-    modal.classList.add('active');
+// Freeze GIFs in gallery
+images.forEach(img => {
+  const src = img.src;
+  img.setAttribute("data-gif", src);
+
+  if (src.endsWith(".gif")) {
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d");
+    const still = new Image();
+    still.src = src;
+    still.onload = () => {
+      canvas.width = still.width;
+      canvas.height = still.height;
+      ctx.drawImage(still, 0, 0, still.width, still.height);
+      img.src = canvas.toDataURL("image/png");
+    };
+  }
+
+  img.addEventListener("click", () => {
+    modalImg.src = img.dataset.gif || img.src;
+    modal.classList.add("active");
   });
 });
 
-modal.addEventListener('click', () => {
-  modal.classList.remove('active');
+modal.addEventListener("click", () => {
+  modal.classList.remove("active");
   setTimeout(() => {
-    modalImg.src = '';
+    modalImg.src = "";
   }, 300);
 });
 </script>

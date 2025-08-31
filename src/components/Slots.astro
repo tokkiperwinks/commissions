@@ -9,7 +9,7 @@ import "../styles/colors.css";
   margin: 1.5rem auto 1rem;
   padding: 0 1rem;
   width: 105%;
-  transform: translate(-6px);
+  transform: translate(-30px);
 }
 
 .mini-heading {
@@ -31,7 +31,7 @@ import "../styles/colors.css";
   position: relative;
   width: 100%;
   aspect-ratio: 2 / 1;
-  border: 2px dashed var(--color-border-light);
+  border: 2px dashed var(--color-subheading);
   border-radius: 10px;
   background: transparent;
   transition: transform 0.15s ease, background-color 0.15s ease;
@@ -40,13 +40,13 @@ import "../styles/colors.css";
   justify-content: center;
   font-size: 1.2rem; /* scales with square size */
   font-weight: bold;
-  color: var(--color-border-light);
+  color: var(--color-subheading);
 }
 
 /* Show "Free" text by default */
 .outline-square::after {
   content: "Free";
-  color: var(--color-border-light);
+  color: var(--color-subheading);
 }
 
 /* Filled slot overrides text */
@@ -86,7 +86,7 @@ import "../styles/colors.css";
 
 <script>
 // Number of filled slots (1 to 5)
-const filledSlots = 1;
+const filledSlots = 0;
 
 const slots = document.querySelectorAll('#slot-grid .outline-square');
 
