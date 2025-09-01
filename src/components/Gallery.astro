@@ -206,6 +206,86 @@ body {
     transform: none !important;
   }
 }
+
+/* Pricing button */
+.pricing-btn {
+  display: block;
+  margin: 1rem auto 0;
+  margin-bottom: 1rem;
+  padding: 0.8rem 1.6rem;
+  font-family: 'Fredoka', sans-serif;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 0.5rem;
+  background: var(--color-border);
+  color: var(--social-text-color);
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.pricing-btn:hover {
+  background: var(--color-subheading);
+}
+
+/* Pricing modal */
+#pricing-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0,0,0,0.6);
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 200;
+  transition: opacity 0.4s ease;
+  opacity: 0;
+  pointer-events: none;
+}
+#pricing-modal-backdrop.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+#pricing-card {
+  max-width: 50rem;
+  max-height: 85vh;
+  width: 90vw;
+  padding: 2rem;
+  border-radius: 1rem;
+  background: var(--color-bg);
+  border: 5px solid var(--color-border);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+  font-family: 'Fredoka', sans-serif;
+  overflow-y: auto;
+  z-index: 201;
+}
+#pricing-card h1 {
+  font-size: 1.75rem;
+  margin-bottom: 1rem;
+}
+#close-pricing {
+  margin-top: 1.5rem;
+  padding: 0.7rem 1.4rem;
+  background: var(--color-border);
+  color: var(--social-text-color);
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  font-family: 'Fredoka', sans-serif;
+}
+#close-pricing:hover {
+  background: var(--color-subheading);
+}
+
+.rules-note {
+  margin-top: 0.25rem;
+  font-style: italic;
+  font-size: 0.85rem;
+  color: var(--color-text-light);
+}
+
 </style>
 
 <div class="gallery-wrapper">
@@ -254,49 +334,64 @@ body {
 
     <!-- Animated Loops -->
     <h1 style="text-align: center; margin-top: 1vh; font-size: 1.75rem;">Animated Loop Examples</h1>
-    <p style="text-align: center; margin: 0.5vh 0 2vh; font-size: 1.2rem; color: var(--color-subheading);">
-      Price range: $150–$300 (Semi-Flat Colors only)<br>(Final price depends on your request. feel free to ask me!)
+	<button class="pricing-btn" id="open-pricing">Pricing Info</button>
     </p>
+	
     <div class="gallery">
-      <div class="square-wrapper" data-nsfw="true"><div class="shadow"></div><div class="square"><img src="animations/bassie.gif" /></div></div>
+      <div class="square-wrapper" data-nsfw="true"><div class="shadow"></div><div class="square"><img src="animations/bassie.webp" /></div></div>
       <div class="square-wrapper" data-nsfw="true"><div class="shadow"></div><div class="square"><img src="animations/comsoandprout.webp" /></div></div>
-      <div class="square-wrapper" data-nsfw="true"><div class="shadow"></div><div class="square"><img src="animations/corala.gif" /></div></div>
-      <div class="square-wrapper" data-nsfw="true"><div class="shadow"></div><div class="square"><img src="animations/goobxbox10.gif" /></div></div>
-      <div class="square-wrapper" data-nsfw="true"><div class="shadow"></div><div class="square"><img src="animations/tishafinal.gif" /></div></div>
+      <div class="square-wrapper" data-nsfw="true"><div class="shadow"></div><div class="square"><img src="animations/corala.webp" /></div></div>
+      <div class="square-wrapper" data-nsfw="true"><div class="shadow"></div><div class="square"><img src="animations/goobxbox10.webp" /></div></div>
+      <div class="square-wrapper" data-nsfw="true"><div class="shadow"></div><div class="square"><img src="animations/tishafinal.webp" /></div></div>
     </div>
 
   </section>
 </div>
 
+<!-- Image modal -->
 <div class="modal" id="image-modal">
   <img id="modal-img" src="" alt="Full size" />
 </div>
 
+<!-- Pricing modal -->
+<div id="pricing-modal-backdrop">
+  <div id="pricing-card">
+    <h1>Animation Pricing Information</h1>
+    <p>Here’s a quick breakdown of how my commission pricing works:</p>
+
+    <ul style="list-style: disc; margin-left: 1.5rem; margin-top: 1rem;">
+      <li>Animated Loops: $150–$200 depending on complexity.</li>
+      <li>Animated Sequence: $200–$300 per sequence, depending on complexity.</li>
+	  <li>
+          <strong>Animation Types</strong>
+          <ul class="list-disc list-inside ml-4">
+            <li>Bust-Up: $20+</li>
+		    <li>Half-Body: $40+</li>
+		    <li>Full-Body: $55+</li>
+          </ul>
+        </li>
+       <p class="rules-note">[Please ask me questions regarding this! I'd be happy to answer!]</p>
+    </ul>
+    <button id="close-pricing">Close</button>
+  </div>
+</div>
+
 <script>
+/* image modal */
 const modal = document.getElementById('image-modal');
 const modalImg = document.getElementById('modal-img');
 const images = document.querySelectorAll('.square-wrapper img');
 
-// Freeze GIFs in gallery
 images.forEach(img => {
-  const src = img.src;
-  img.setAttribute("data-gif", src);
-
-  if (src.endsWith(".gif")) {
-    const canvas = document.createElement("canvas");
-    const ctx = canvas.getContext("2d");
-    const still = new Image();
-    still.src = src;
-    still.onload = () => {
-      canvas.width = still.width;
-      canvas.height = still.height;
-      ctx.drawImage(still, 0, 0, still.width, still.height);
-      img.src = canvas.toDataURL("image/png");
-    };
+  if (img.src.endsWith(".webp")) {
+    img.setAttribute("data-src", img.src);
+    const preview = img.src.replace(".webp", "_preview.png");
+    img.src = preview;
   }
 
   img.addEventListener("click", () => {
-    modalImg.src = img.dataset.gif || img.src;
+    const fullSrc = img.dataset.src || img.src;
+    modalImg.src = fullSrc;
     modal.classList.add("active");
   });
 });
@@ -306,5 +401,27 @@ modal.addEventListener("click", () => {
   setTimeout(() => {
     modalImg.src = "";
   }, 300);
+});
+
+/* pricing modal */
+const pricingModal = document.getElementById('pricing-modal-backdrop');
+const openPricing = document.getElementById('open-pricing');
+const closePricing = document.getElementById('close-pricing');
+
+openPricing.addEventListener('click', () => {
+  pricingModal.classList.add('active');
+  document.body.classList.add('modal-open');
+});
+
+closePricing.addEventListener('click', () => {
+  pricingModal.classList.remove('active');
+  document.body.classList.remove('modal-open');
+});
+
+pricingModal.addEventListener('click', e => {
+  if (e.target === pricingModal) {
+    pricingModal.classList.remove('active');
+    document.body.classList.remove('modal-open');
+  }
 });
 </script>
