@@ -49,7 +49,7 @@ import "../styles/colors.css";
       padding: 2rem;
       border-radius: 1rem;
       background-color: var(--color-bg);
-	  border: 5px solid var(--color-border);
+      border: 5px solid var(--color-border);
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
       font-family: 'Fredoka', sans-serif;
       font-size: 1rem;
@@ -70,78 +70,40 @@ import "../styles/colors.css";
       border-radius: 4px;
     }
 
-    .accept-button {
+    .accept-button, .toggle-button {
       margin-top: 2rem;
       padding: 0.75rem 1.5rem;
       background-color: var(--color-border);
-	  color: var(--social-text-color);
+      color: var(--social-text-color);
       font-family: 'Fredoka', sans-serif;
       border: none;
       border-radius: 0.5rem;
       font-size: 1rem;
       cursor: pointer;
+      margin-right: 1rem;
     }
 
-    .accept-button:hover {
+    .accept-button:hover, .toggle-button:hover {
       background-color: var(--color-subheading);
     }
 
-    @keyframes bounceFall {
-      0% {
-        transform: translate(0, 0);
+    @media (max-width: 768px) {
+      .modal-backdrop {
+        width: 111vw;
+        height: 111vh;
       }
-      20% {
-        transform: translate(var(--x-move), -40px);
-      }
-      40% {
-        transform: translate(var(--x-move), 0);
-      }
-      60% {
-        transform: translate(calc(var(--x-move) * 1.5), -20px);
-      }
-      80% {
-        transform: translate(calc(var(--x-move) * 2), 0);
-      }
-      100% {
-        transform: translate(calc(var(--x-move) * 3), 200vh);
-        opacity: 0;
-      }
-    }
 
-    .fall-off {
-      animation: bounceFall 1s ease-in forwards;
+      .card {
+        position: fixed;
+        top: 46%;
+        left: 45%;
+        transform: translate(-50%, -50%);
+        max-width: 23rem;
+        max-height: 80vh;
+        width: 90vw;
+        padding: 2rem;
+      }
     }
-	
-	  @media (max-width: 768px) {
-	  
-	  .modal-backdrop {
-	  width: 111vw;
-	  height: 111vh;
-	  }
-	  
-	  .card {
-      position: fixed;
-      top: 46%;
-      left: 45%;
-      transform: translate(-50%, -50%);
-      max-width: 23rem;
-      max-height: 80vh;
-      width: 90vw;
-      padding: 2rem;
-      border-radius: 1rem;
-      background-color: var(--color-bg);
-	  border: 5px solid var(--color-border);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-      font-family: 'Fredoka', sans-serif;
-      font-size: 1rem;
-      line-height: 1.6;
-      overflow-y: auto;
-      white-space: normal;
-      scrollbar-width: thin;
-      scrollbar-color: #2d2d2d transparent;
-      z-index: 100;
-    }
-  }
   </style>
 </head>
 <body>
@@ -150,64 +112,115 @@ import "../styles/colors.css";
   <div id="card" class="card">
     <h1 class="text-3xl font-bold mb-6">Terms of Service</h1>
 
-    <section class="mb-6">
-      <h2 class="text-xl font-semibold mb-2">General</h2>
-      <ul class="list-disc pl-5 space-y-2">
-        <li>I reserve the right to decline any commission for any reason I deem necessary.</li>
-        <li>Commissions are for personal use only. They may not be used for profit.</li>
-        <li>I retain full rights to all artwork I create. Uploading or using my work in AI engines is strictly prohibited.</li>
-        <li>Unless requested otherwise, I may post the final piece on social media, in my portfolio, or in my commission gallery.</li>
-        <li>Prices are base estimates. Complexity or extra details may raise the final cost.</li>
-        <li>
-          Reposting is allowed with proper credit:
-          <a href="https://x.com/tokkiperiwinkle" 
-		   target="_blank" 
-		   rel="noopener noreferrer" 
-		   style="color:#8f99fb; text-decoration: underline;">
-		   @tokkiperiwinkle
-		  </a>.
-        </li>
-        <li>Please be patient. I have other commitments. Feel free to ask for updates.</li>
-        <li>Provide visual references like character sheets, poses, or doodles to avoid mistakes.</li>
-      </ul>
-    </section>
+    <div id="tos-content">
+      <!-- Full Terms -->
+      <section class="mb-6">
+        <h2 class="text-xl font-semibold mb-2">General</h2>
+        <ul class="list-disc pl-5 space-y-2">
+          <li>I reserve the right to decline any commission for any reason I deem necessary.</li>
+          <li>Commissions are for personal use only. They may not be used for profit.</li>
+          <li>I retain full rights to all artwork I create. Uploading or using my work in AI engines is strictly prohibited.</li>
+          <li>Unless requested otherwise, I may post the final piece on social media, in my portfolio, or in my commission gallery.</li>
+          <li>Prices are base estimates. Complexity or extra details may raise the final cost.</li>
+          <li>
+            Reposting is allowed with proper credit:
+            <a href="https://x.com/tokkiperiwinkle" 
+             target="_blank" 
+             rel="noopener noreferrer" 
+             style="color:#8f99fb; text-decoration: underline;">
+             @tokkiperiwinkle
+            </a>.
+          </li>
+          <li>Please be patient. I have other commitments. Feel free to ask for updates.</li>
+          <li>Provide visual references like character sheets, poses, or doodles to avoid mistakes.</li>
+          <li>By commissioning me, you give me the right to log your username. Conversations about commissions remain confidential unless absolutely necessary. (i.e. paying to get a real person's oc drawn sexually without consent, to warn others of scam artists)</li>
+        </ul>
+      </section>
 
-		<section class="mb-6">
-	  <h2 class="text-xl font-semibold mb-2">Payment</h2>
-	  <ul class="list-disc pl-5 space-y-2">
-		<li>Payments are accepted through PayPal only. I will provide you with a PayPal link.</li>
-		<li>You must pay at least 50% upfront before I start.</li>
-		<li>After the sketch is approved, the remaining balance must be paid in full using the same PayPal link or a new one I provide.</li>
-		<li>If you cancel after paying the deposit but before sketch approval, a partial refund may be issued. I will retain at least 25%.</li>
-		<li>If I cancel the commission, I’ll refund based on work done but retain at least 25% for time spent.</li>
-		<li>Rude, aggressive, or inappropriate behavior will result in cancellation. I’ll refund 50% and keep 50% as compensation.</li>
-	  </ul>
-	</section>
+      <section class="mb-6">
+        <h2 class="text-xl font-semibold mb-2">Payment</h2>
+        <ul class="list-disc pl-5 space-y-2">
+          <li>Payments are accepted through PayPal only. I will provide you with a PayPal link.</li>
+          <li>You must pay at least 50% upfront before I start.</li>
+          <li>After the sketch is approved, the remaining balance must be paid in full using the same PayPal link or a new one I provide.</li>
+          <li>If you cancel after paying the deposit but before sketch approval, a partial refund may be issued. I will retain at least 25%.</li>
+          <li>If I cancel the commission, I’ll refund based on work done but retain at least 25% for time spent.</li>
+          <li>Rude, aggressive, or inappropriate behavior will result in cancellation. I’ll refund 50% and keep 50% as compensation.</li>
+        </ul>
+      </section>
 
-    <section class="mb-6">
-      <h2 class="text-xl font-semibold mb-2">Post-Payment</h2>
-      <ul class="list-disc pl-5 space-y-2">
-        <li>You’ll receive sketch progress and flat colors (if needed) for feedback or revisions.</li>
-        <li>After sketch approval, refunds are no longer available unless I cancel the commission.</li>
-        <li>Final preview will be sent. You can request up to 3 minor revisions. More will cost extra.</li>
-        <li>Approved files will be emailed as high-res PNGs and watermarked JPGs for posting.</li>
-      </ul>
-    </section>
+      <section class="mb-6">
+        <h2 class="text-xl font-semibold mb-2">Post-Payment</h2>
+        <ul class="list-disc pl-5 space-y-2">
+          <li>You’ll receive sketch progress and flat colors (if needed) for feedback or revisions.</li>
+          <li>After sketch approval, refunds are no longer available unless I cancel the commission.</li>
+          <li>Final preview will be sent. You can request up to 3 minor revisions. More will cost extra.</li>
+          <li>Approved files will be emailed as high-res PNGs and watermarked JPGs for posting.</li>
+        </ul>
+      </section>
 
-    <section class="mb-6">
-      <p>By commissioning me, you agree to all of the yada yada yadas i said above :]</p>
-    </section>
+      <section class="mb-6">
+        <p>By commissioning me, you agree to all of the yada yada yadas i said above :]</p>
+      </section>
+    </div>
 
-    <button class="accept-button" id="acceptBtn">Accept</button>
+    <div>
+      <button class="toggle-button" id="toggleBtn">Show TL;DR</button>
+      <button class="accept-button" id="acceptBtn">Accept</button>
+    </div>
   </div>
 </div>
 
 <script>
   document.addEventListener("DOMContentLoaded", () => {
     const acceptBtn = document.getElementById("acceptBtn");
+    const toggleBtn = document.getElementById("toggleBtn");
+    const tosContent = document.getElementById("tos-content");
     const modal = document.getElementById("modal");
 
+    const fullText = tosContent.innerHTML;
+    const tldrText = `
+      <section class="mb-6">
+        <h2 class="text-xl font-semibold mb-2">TL;DR</h2>
+        <ul class="list-disc pl-5 space-y-2">
+          <li>I may decline commissions anytime.</li>
+          <li>Personal use only, no profit/AI.</li>
+          <li>I keep rights; may post unless told otherwise.</li>
+          <li>Prices can rise with complexity.</li>
+          <li>Credit me if reposting: <a href="https://x.com/tokkiperiwinkle" 
+             target="_blank" 
+             rel="noopener noreferrer" 
+             style="color:#8f99fb; text-decoration: underline;">
+             @tokkiperiwinkle
+            </a></li>
+          <li>Be patient + provide refs.</li>
+          <li>I can log your username. Our chats stay private unless I need to warn others about serious issues (e.g. scams or harmful requests).</li>
+          <li>PayPal only: 50% upfront, rest after sketch.</li>
+          <li>Cancel before sketch = partial refund (I keep 25%).</li>
+          <li>If I cancel = refund minus 25%.</li>
+          <li>Rude behavior = 50/50 refund split.</li>
+          <li>No refunds after sketch approval.</li>
+          <li>Up to 3 free minor revisions; extras cost.</li>
+          <li>Final: high-res PNG + watermarked JPG.</li>
+        </ul>
+      </section>
+    `;
+
+    let showingTLDR = false;
+
     document.body.classList.add("modal-open");
+
+    toggleBtn.addEventListener("click", () => {
+      if (showingTLDR) {
+        tosContent.innerHTML = fullText;
+        toggleBtn.textContent = "Show TL;DR";
+        showingTLDR = false;
+      } else {
+        tosContent.innerHTML = tldrText;
+        toggleBtn.textContent = "Show Full";
+        showingTLDR = true;
+      }
+    });
 
     acceptBtn.addEventListener("click", () => {
       modal.classList.add("fade-out");
